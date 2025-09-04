@@ -14,7 +14,7 @@
 */
 function setup() {
     // A 640x480 canvas
-    createCanvas(1280, 640);
+    createCanvas(640, 640);
 
     // Don't show the cursor
     noCursor();
@@ -49,7 +49,7 @@ function draw() {
         // (320, 320) with a size based on the level
         // e.g. level 1 will be a 48x48 rectangle and
         // level 10 will be a 480x480 rectangle
-        rect(320, 320, level * 48, level * 48);
+        rect(640, 640, level * 82, level * 82);
         pop();
     }
 
