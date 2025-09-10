@@ -31,8 +31,8 @@ function land(){
     fill("#007ca5");//giving the ellipse color
     noStroke();//no border line 
 
-    ellipse(430,550,500,300);
-    fill("#157291")
+    ellipse(430,550,500,300);// the second ellipse 
+    fill("#157291")//darker color 
     noStroke();
 
 }
