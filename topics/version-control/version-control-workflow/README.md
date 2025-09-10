@@ -3,7 +3,8 @@
 AUTHOR NAME
 
 [View this project online](URL_FOR_THE_RUNNING_PROJECT)
-
+dont read me cuz I don't know what I'm doing. 
+I'm so frustrated 
 ## Description
 
 This description should help the reader understand what the program is, anything they should know to be able to experience it (controls, special features, etc.), and what the desired user experience is. For example:
