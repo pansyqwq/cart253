@@ -1,8 +1,9 @@
 /**
- * Title of Project
- * Author Name
+ * Title of Project landscape-challenge
+ * Author Name Ziyan Pan
+ * group member Weini Wang
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
+ * HOW EMBARRASSING! Draw a landscape with a house 
  * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
  */
 
@@ -12,7 +13,8 @@
  * OH LOOK I DIDN'T DESCRIBE SETUP!!
 */
 function setup() {
-
+    createCanvas(640, 480);//creating ur canvas
+    background("#80d6f1");
 }
 
 
