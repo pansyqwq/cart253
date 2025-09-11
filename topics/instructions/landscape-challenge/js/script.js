@@ -28,6 +28,7 @@ function draw() {
     land();
     cloud();
     moon();
+    star();
 }
 function land(){
     push();
@@ -63,5 +64,13 @@ function moon(){
     noStroke();
     fill(255);
     ellipse(100,100,120,120);
+    pop();
+}
+
+function star(){ //a diamond shape star 
+    push();
+    noStroke();
+    fill("#c2f1ed")
+    quad(230,122,246,80,230,38,214,80);
     pop();
 }
