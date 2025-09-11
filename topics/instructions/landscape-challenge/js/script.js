@@ -25,10 +25,12 @@ function setup() {
 */
 function draw() {
     // draw everything stated in the functions
+    people();// first layer 
     land();
     cloud();
     moon();
     star();
+
 }
 function land(){
     push();
@@ -72,5 +74,14 @@ function star(){ //a diamond shape star
     noStroke();
     fill("#c2f1ed")
     quad(230,122,246,80,230,38,214,80);
+    pop();
+}
+
+function people(){ //using a circle and a ellipse as the body and head of the character 
+    push();
+    noStroke();
+    fill("#32327c")
+    ellipse(100,300,20,20);
+    ellipse(100,350,20,90);
     pop();
 }
