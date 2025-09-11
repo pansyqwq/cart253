@@ -24,8 +24,10 @@ function setup() {
  * OOPS I DIDN'T DESCRIBE WHAT MY DRAW DOES!
 */
 function draw() {
+    // draw everything stated in the functions
     land();
     cloud();
+    moon();
 }
 function land(){
     push();
@@ -43,7 +45,6 @@ function land(){
 }
 
 function cloud(){
-
     //a clound learned from lecture, from pippin. location and color changed 
     push();
     noStroke();
@@ -53,5 +54,14 @@ function cloud(){
     ellipse(460,120,60,60);
     ellipse(490,130,60,60);
     ellipse(520,120,60,60);
+    pop();
+}
+
+function moon(){ 
+    //adding a white circle as moon 
+    push();
+    noStroke();
+    fill(255);
+    ellipse(100,100,120,120);
     pop();
 }
