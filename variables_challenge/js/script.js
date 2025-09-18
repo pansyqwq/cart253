@@ -47,6 +47,9 @@ let birdP = {
   }
 }
 
+let rate = 1;
+  
+
 
 /**
  * Create the canvas
@@ -80,7 +83,11 @@ function draw() {
   mrFurious.fill.b = constrain(mrFurious.fill.b,0,255);
   
   //making mrFurious shake 
+  rate +=1;
+  // make the circle shake more and more 
+  frameRate(rate);
   mrFurious.x += random(-5,5);
+  mrFurious.x = constrain(mrFurious.x,195,205);
  
 
   // Draw Mr. Furious as a coloured circle
