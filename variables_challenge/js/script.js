@@ -22,6 +22,7 @@ let mrFurious = {
     reduceB:1
   }
 };
+
 // color data for the background
 let sky = {
   r:160,
@@ -30,8 +31,21 @@ let sky = {
   reduceR:0.5,
   reduceG:0.5,
   reduceB:0.5
-
 }
+
+//the properties for bird 
+let birdP = {
+  x: 0,
+  y: 40,
+  size: 30,
+  // Colour for bird
+  fill: {
+    r: 150,
+    g: 200,
+    b: 200,
+  }
+}
+
 /**
  * Create the canvas
  */
@@ -43,6 +57,7 @@ function setup() {
  * Draw (and update) Mr. Furious
  */
 function draw() {
+
   //turning background gradually to black 
   sky.r = sky.r - sky.reduceR;
   sky.g = sky.g - sky.reduceG;
@@ -69,4 +84,12 @@ function draw() {
   fill(mrFurious.fill.r, mrFurious.fill.g, mrFurious.fill.b);
   ellipse(mrFurious.x, mrFurious.y, mrFurious.size);
   pop();
-}
+
+  bird();
+  }
+
+  //create a circle as a bird
+  function bird(){
+    fill(birdP.fill.r,birdP.fill.g,birdP.fill.b);
+    ellipse(birdP.x,birdP.y,birdP.size);
+  }
