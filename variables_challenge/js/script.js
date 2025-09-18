@@ -21,6 +21,7 @@ let mrFurious = {
     reduceG:1,
     reduceB:1
   }
+  
 };
 
 // color data for the background
@@ -45,6 +46,7 @@ let birdP = {
     b: 200,
   }
 }
+
 
 /**
  * Create the canvas
@@ -71,8 +73,8 @@ function draw() {
 
   console.log(mrFurious.fill.g);
   // make the circle more and more red
-  mrFurious.fill.g = mrFurious.fill.g - mrFurious.fill.reduceG;
-  mrFurious.fill.b = mrFurious.fill.b - mrFurious.fill.reduceB;
+  mrFurious.fill.g -= mrFurious.fill.reduceG;
+  mrFurious.fill.b -= mrFurious.fill.reduceB;
   //set the range of the color
   mrFurious.fill.g = constrain(mrFurious.fill.g,0,255);
   mrFurious.fill.b = constrain(mrFurious.fill.b,0,255);
@@ -90,6 +92,11 @@ function draw() {
 
   //create a circle as a bird
   function bird(){
+    //move the bird to the right
+    birdP.x += 1
+    //make the bird move randomly up and down in a range 
+    birdP.y += random(-5,5);
+    birdP.y = constrain(birdP.y,40,100)
     fill(birdP.fill.r,birdP.fill.g,birdP.fill.b);
     ellipse(birdP.x,birdP.y,birdP.size);
   }
