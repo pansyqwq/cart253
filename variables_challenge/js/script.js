@@ -13,7 +13,7 @@ let mrFurious = {
   x: 200,
   y: 200,
   size: 100,
-  // Colour
+  // Colour for mrFurious
   fill: {
     r: 255,
     g: 225,
@@ -22,7 +22,16 @@ let mrFurious = {
     reduceB:1
   }
 };
+// color data for the background
+let sky = {
+  r:160,
+  g:180,
+  b:200,
+  reduceR:0.5,
+  reduceG:0.5,
+  reduceB:0.5
 
+}
 /**
  * Create the canvas
  */
@@ -34,7 +43,16 @@ function setup() {
  * Draw (and update) Mr. Furious
  */
 function draw() {
-  background(160, 180, 200);
+  //turning background gradually to black 
+  sky.r = sky.r - sky.reduceR;
+  sky.g = sky.g - sky.reduceG;
+  sky.b = sky.b - sky.reduceB;
+  // restricting numbers in the range
+  sky.r = constrain(sky.r,0,255);
+  sky.g = constrain(sky.g,0,255);
+  sky.b = constrain(sky.b,0,255);
+  background(sky.r, sky.g, sky.b);
+  
 
   console.log(mrFurious.fill.g);
   // make the circle more and more red
