@@ -19,7 +19,11 @@ const puck = {
   x: 200,
   y: 200,
   size: 100,
-  fill: "#ff0000"
+  fill: "#ff0000",
+  fills: {
+    noOverlap: "#ff0000", // red for no overlap
+    overlap: "#00ff00" // green for overlap
+  }
 };
 
 const user = {
@@ -83,5 +87,16 @@ function drawPuck() {
   pop();
 }
 function movePuck(){
-
+const d = dist(user.x, user.y, puck.x, puck.y);
+  // Check if that distance is smaller than their two radii, 
+  // because if it is, they are overlapping by the amazing
+  // power of geometry!
+  const overlap = (d < user.size/2 + puck.size/2);
+  // Set fill based on whether they overlap
+  if (overlap) {
+    puck.fill = puck.fills.overlap;
+  }
+  else {
+    puck.fill = puck.fills.noOverlap;
+  }
 }
