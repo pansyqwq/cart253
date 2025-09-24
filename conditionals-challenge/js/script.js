@@ -1,9 +1,8 @@
 /**
- * Title of Project
- * Author Name
+ * conditional challenge
+ * Ziyan Pan, teamate: Weini Wang
  * 
- * HOW EMBARRASSING! I HAVE NO DESCRIPTION OF MY PROJECT!
- * PLEASE REMOVE A GRADE FROM MY WORK IF IT'S GRADED!
+ * figuring out distance and overlapping, exercise 
  */
 
 "use strict";
