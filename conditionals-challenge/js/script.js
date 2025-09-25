@@ -116,10 +116,17 @@ const d = dist(user.x, user.y, puck.x, puck.y);
   // Check if that distance is smaller than their two radii, 
   const overlap = (d < user.size/2 + puck.size/2);
   // move to the opposite direction based on whether they overlap
-  if (overlap && user.x > puck.x) {
+    if (overlap && user.x > puck.x){
     puck.x -= 1;
   }
   else if(overlap && user.x < puck.x){
     puck.x += 1;
+  }
+  
+    if (overlap && user.y > puck.y){
+    puck.y -= 1;
+  }
+  else if(overlap && user.y < puck.y){
+    puck.y += 1;
   }
 }
