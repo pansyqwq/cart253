@@ -20,11 +20,7 @@ const puck = {
   x: 200,
   y: 200,
   size: 100,
-  fill: "#ff0000",
-  fills: {
-    noOverlap: "#ff0000", // red for no overlap
-    overlap: "#00ff00" // green for overlap
-  }
+  fill: "#c34c4cff",
 };
 
 //info for user circle
@@ -32,7 +28,7 @@ const user = {
   x: undefined, // will be mouseX
   y: undefined, // will be mouseY
   size: 75,
-  fill: "#000000"
+  fill: "#e4ea8dff"
 };
 
 //info for target circle
@@ -40,7 +36,11 @@ const target ={
   x: 70, 
   y: 70, 
   size: 100,
-  fill: "#1d1995ff"
+  fill: "#a5a4c9ff",
+  fills: {
+    noOverlap: "#9492c5ff", // blue for no overlap
+    overlap: "#b1deb1ff" // green for overlap
+  }
 }
 
 //create a canvas
@@ -63,7 +63,8 @@ function draw() {
   drawTarget();
 
 //   check if the user and puck circles overlap
-  movePuck()
+  movePuck();
+  checktarget()
 }
 
 /**
@@ -101,7 +102,7 @@ function drawTarget(){
   stroke(255);
   strokeWeight(2);
   fill(target.fill);
-  setLineDash([10,10]);
+  setLineDash([10,10]);//putting a dashed outline
   ellipse(target.x, target.y, target.size);
   pop();
 }
@@ -128,5 +129,18 @@ const d = dist(user.x, user.y, puck.x, puck.y);
   }
   else if(overlap && user.y < puck.y){
     puck.y += 1;
+  }
+}
+
+function checktarget(){
+    const d = dist(puck.x, puck.y, target.x, target.y);
+  // Check if that distance is smaller than their two radii, 
+  const overlap = (d < puck.size/2 + target.size/2);
+  // change color if overlap
+    if (overlap){
+    target.fill = target.fills.overlap;
+  }
+  else{
+    target.fill = target.fills.noOverlap;
   }
 }
