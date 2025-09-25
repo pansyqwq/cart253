@@ -15,6 +15,7 @@
  * on the canvas using their own circle.
  */
 
+//info for puck circle
 const puck = {
   x: 200,
   y: 200,
@@ -26,6 +27,7 @@ const puck = {
   }
 };
 
+//info for user circle
 const user = {
   x: undefined, // will be mouseX
   y: undefined, // will be mouseY
@@ -33,9 +35,15 @@ const user = {
   fill: "#000000"
 };
 
-/**
- * Create the canvas
- */
+//info for target circle
+const target ={
+  x: 70, 
+  y: 70, 
+  size: 100,
+  fill: "#1d1995ff"
+}
+
+//create a canvas
 function setup() {
   createCanvas(400, 400);
 }
@@ -52,6 +60,7 @@ function draw() {
   // Draw the user and puck
   drawUser();
   drawPuck();
+  drawTarget();
 
 //   check if the user and puck circles overlap
   movePuck()
@@ -86,6 +95,22 @@ function drawPuck() {
   ellipse(puck.x, puck.y, puck.size);
   pop();
 }
+//draw the target circle and make it have dashed outline
+function drawTarget(){
+  push();
+  stroke(255);
+  strokeWeight(2);
+  fill(target.fill);
+  setLineDash([10,10]);
+  ellipse(target.x, target.y, target.size);
+  pop();
+}
+//make the outline dashed
+function setLineDash(list){
+    drawingContext.setLineDash(list);
+}
+
+// display target circle
 function movePuck(){
 const d = dist(user.x, user.y, puck.x, puck.y);
   // Check if that distance is smaller than their two radii, 
