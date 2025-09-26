@@ -7,24 +7,26 @@
 
 "use strict";
 
-//data for the pistil
-const pistil = {
-  x1: 400,
-  y1: 400,
-  fills: {
-    white: "#ecf3e9ff", // white for large triangle
-    yellow: "#f9d300ff" // yellow for small triangle
-  }
-};
+// //data for the pistil
+// const pistil = {
+//   x1: 400,
+//   y1: 400,
+//   fills: {
+//     white: "#ecf3e9ff", // white for large triangle
+//     yellow: "#f9d300ff" // yellow for small triangle
+//   }
+// };
 
 const petal = {
-  x1: undefined,
-  y1: undefined,
+  x1: 400,
+  y1: 400,
   x2: undefined,
   y2: undefined,
   x3: undefined,
   y3: undefined,
   fills: {
+    white: "#ecf3e9ff", // white for large triangle
+    yellow: "#f9d300ff", // yellow for small triangle
     dark: "#0f0142ff", // dark blue for inner petal
     light: "#5832ffff", // light purple for outter petal
     light2: "#3f2bddff",// a slightly different purple
@@ -56,19 +58,19 @@ function drawPistil(){
     //creating a big white triangle
     push();
     noStroke();
-    fill(pistil.fills.white);
-    pistil.x1 = 400;
-    pistil.y1 = 400;
-    triangle(pistil.x1, pistil.y1, pistil.x1+30, pistil.y1+30, pistil.x1-30, pistil.y1+30); 
+    fill(petal.fills.white);
+    petal.x1 = 400;
+    petal.y1 = 400;
+    triangle(petal.x1, petal.y1, petal.x1+30, petal.y1+30, petal.x1-30, petal.y1+30); 
     pop();
 
     //creating a small yellow triangle
     push();
     noStroke();
-    fill(pistil.fills.yellow);
-    pistil.x1 = 400;
-    pistil.y1 = 400;
-    triangle(pistil.x1, pistil.y1+20, pistil.x1+10, pistil.y1+10, pistil.x1-10, pistil.y1+10); 
+    fill(petal.fills.yellow);
+    petal.x1 = 400;
+    petal.y1 = 400;
+    triangle(petal.x1, petal.y1+20, petal.x1+10, petal.y1+10, petal.x1-10, petal.y1+10); 
     pop();
 }
 
@@ -117,7 +119,7 @@ function drawBottomPetal(){
     //do a dark blue arc (a partly missing circle)) as the curve of the petal
     push();
     fill(petal.fills.dark);
-    arc(pistil.x1-47, 525, 120, 100, 100, 255, OPEN);
+    arc(petal.x1-47, 525, 120, 100, 100, 255, OPEN);
     pop();
 
     //do another blue arc as the curve of the petal
