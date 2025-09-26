@@ -81,6 +81,33 @@ function drawPistil(){
 }
 
 function drawPetal(){
+    //do a light triangle for the outter part of the petal
+    push();
+    noStroke();
+    fill(petal.fills.light);
+    petal.x1 = 400;
+    petal.y1 = 400;
+    petal.x2 = petal.x1 + 140;
+    petal.y2 = petal.y1 + 120;
+    petal.x3 = petal.x1 - 140;
+    petal.y3 = petal.y2;
+    triangle(petal.x1, petal.y1, petal.x2, petal.y2, petal.x3, petal.y3); 
+    pop();
+
+    //do a light arc (a partly missing circle)) as the curve of the outter petal
+    push();
+    noStroke();
+    fill(petal.fills.light);
+    arc(337, 550, 170, 130, 100, 255, OPEN);
+    pop();
+
+    //do another light arc (a partly missing circle)) as the curve of the outter petal
+    push();
+    noStroke();
+    fill(petal.fills.light);
+    arc(462, 550, 170, 130, 200, 180, OPEN);
+    pop();
+
     //do a dark blue triangle for the inner part of the petal
     push();
     noStroke();
@@ -111,4 +138,6 @@ function drawPetal(){
     fill(petal.fills.dark);
     arc(450, 525, 120, 100, 200, 180, OPEN);
     pop();
+
+  
 }
