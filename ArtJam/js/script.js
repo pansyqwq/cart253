@@ -9,12 +9,8 @@
 
 //data for the pistil
 const pistil = {
-  x1: undefined,
-  y1: undefined,
-  x2: undefined,
-  y2: undefined,
-  x3: undefined,
-  y3: undefined,
+  x1: 400,
+  y1: 400,
   fills: {
     white: "#ecf3e9ff", // white for large triangle
     yellow: "#f9d300ff" // yellow for small triangle
@@ -52,7 +48,7 @@ function draw() {
     drawSidePetal();
     drawBottomPetal();
     drawPistil();
-    console.log(drawBottomPetal);
+    console.log(drawPistil);
 }
 
 //creating the pistil, two parts a large white triangle and a small yellow triangle
@@ -63,11 +59,7 @@ function drawPistil(){
     fill(pistil.fills.white);
     pistil.x1 = 400;
     pistil.y1 = 400;
-    pistil.x2 = pistil.x1 + 30;
-    pistil.y2 = pistil.y1 + 30;
-    pistil.x3 = pistil.x1 - 30;
-    pistil.y3 = pistil.y2;
-    triangle(pistil.x1, pistil.y1, pistil.x2, pistil.y2, pistil.x3, pistil.y3); 
+    triangle(pistil.x1, pistil.y1, pistil.x1+30, pistil.y1+30, pistil.x1-30, pistil.y1+30); 
     pop();
 
     //creating a small yellow triangle
@@ -75,12 +67,8 @@ function drawPistil(){
     noStroke();
     fill(pistil.fills.yellow);
     pistil.x1 = 400;
-    pistil.y1 = 420;
-    pistil.x2 = pistil.x1 + 10;
-    pistil.y2 = pistil.y1 + 10;
-    pistil.x3 = pistil.x1 - 10;
-    pistil.y3 = pistil.y2;
-    triangle(pistil.x1, pistil.y1, pistil.x2, pistil.y2, pistil.x3, pistil.y3); 
+    pistil.y1 = 400;
+    triangle(pistil.x1, pistil.y1+20, pistil.x1+10, pistil.y1+10, pistil.x1-10, pistil.y1+10); 
     pop();
 }
 
@@ -129,7 +117,7 @@ function drawBottomPetal(){
     //do a dark blue arc (a partly missing circle)) as the curve of the petal
     push();
     fill(petal.fills.dark);
-    arc(353, 525, 120, 100, 100, 255, OPEN);
+    arc(pistil.x1-47, 525, 120, 100, 100, 255, OPEN);
     pop();
 
     //do another blue arc as the curve of the petal
