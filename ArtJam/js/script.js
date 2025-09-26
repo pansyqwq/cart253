@@ -39,16 +39,17 @@ const petal = {
 */
 function setup() {
     createCanvas(800, 800);
-    background("#80d6f1");
+    background("#a5cbb5ff");
 }
 
 /**
  * all the functions that builds the portrait
 */
 function draw() {
-    drawPetal();
+    drawRightPetal();
+    drawBottomPetal();
     drawPistil();
-    console.log(drawPetal);
+    console.log(drawBottomPetal);
 }
 
 //creating the pistil, two parts a large white triangle and a small yellow triangle
@@ -80,10 +81,10 @@ function drawPistil(){
     pop();
 }
 
-function drawPetal(){
+function drawBottomPetal(){
     //do a light triangle for the outter part of the petal
     push();
-    noStroke();
+    // noStroke();
     fill(petal.fills.light);
     petal.x1 = 400;
     petal.y1 = 400;
@@ -98,14 +99,14 @@ function drawPetal(){
     push();
     noStroke();
     fill(petal.fills.light);
-    arc(337, 550, 170, 130, 100, 255, OPEN);
+    arc(336, 550, 170, 130, 100, 255, OPEN);
     pop();
 
     //do another light arc (a partly missing circle)) as the curve of the outter petal
     push();
     noStroke();
     fill(petal.fills.light);
-    arc(462, 550, 170, 130, 200, 180, OPEN);
+    arc(465, 550, 170, 130, 200, 180, OPEN);
     pop();
 
     //do a dark blue triangle for the inner part of the petal
@@ -121,23 +122,30 @@ function drawPetal(){
     triangle(petal.x1, petal.y1, petal.x2, petal.y2, petal.x3, petal.y3); 
     pop();
 
-    // a not used ellipse version 
-    // push();
-    // fill(petal.fills.dark);
-    // ellipse(435, petal.y2, 100,70);
-    // pop();
-
     //do a dark blue arc (a partly missing circle)) as the curve of the petal
     push();
     fill(petal.fills.dark);
     arc(353, 525, 120, 100, 100, 255, OPEN);
     pop();
 
-    //do another blue art as the curve of the petal
+    //do another blue arc as the curve of the petal
     push();
     fill(petal.fills.dark);
     arc(450, 525, 120, 100, 200, 180, OPEN);
     pop();
+}
 
-  
+function drawRightPetal(){
+   //do a light art as the curve of the petal
+    push();
+    noStroke();
+    fill(petal.fills.light);
+    arc(490, 425, 190, 180, -PI/5, 1.1*PI, OPEN);
+    pop();
+
+  // do an dark blue ellipse for the inner part of the petal
+    push();
+    fill(petal.fills.dark);
+    ellipse(450, 430, 140,70);
+    pop();
 }
