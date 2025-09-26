@@ -1,25 +1,16 @@
 /**
  * Self portrait
- * Ziyan Pan
+ * Ziyan Pan(Pansy)
  * 
  * an artwork that represents myself
+ * the flower is the meaning of my name, Pansy
  */
 
 "use strict";
 
-// //data for the pistil
-// const pistil = {
-//   x1: 400,
-//   y1: 400,
-//   fills: {
-//     white: "#ecf3e9ff", // white for large triangle
-//     yellow: "#f9d300ff" // yellow for small triangle
-//   }
-// };
-
 const petal = {
-  x1: 400,
-  y1: 400,
+  x1: undefined,//will be mouseX
+  y1: undefined,//will be mouseY
   fills: {
     white: "#ecf3e9ff", // white for large triangle
     yellow: "#f9d300ff", // yellow for small triangle
@@ -42,13 +33,20 @@ function setup() {
  * all the functions that builds the portrait
 */
 function draw() {
+    moveUser();
     drawTopPetal();
     drawSidePetal();
     drawBottomPetal();
     drawPistil();
     console.log(drawPistil);
 }
-
+/**
+ * Sets the user position to the mouse position
+ */
+function moveUser() {
+  petal.x1 = mouseX;
+  petal.y1 = mouseY;
+}
 //creating the pistil, two parts a large white triangle and a small yellow triangle
 function drawPistil(){
     //creating a big white triangle
@@ -149,6 +147,5 @@ function drawTopPetal(){
     fill(petal.fills.light2);
     ellipse(petal.x1-40, petal.y1-40, 200,150);
     pop();
-
 }
 
