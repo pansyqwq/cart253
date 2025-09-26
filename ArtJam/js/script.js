@@ -20,10 +20,6 @@
 const petal = {
   x1: 400,
   y1: 400,
-  x2: undefined,
-  y2: undefined,
-  x3: undefined,
-  y3: undefined,
   fills: {
     white: "#ecf3e9ff", // white for large triangle
     yellow: "#f9d300ff", // yellow for small triangle
@@ -59,8 +55,6 @@ function drawPistil(){
     push();
     noStroke();
     fill(petal.fills.white);
-    petal.x1 = 400;
-    petal.y1 = 400;
     triangle(petal.x1, petal.y1, petal.x1+30, petal.y1+30, petal.x1-30, petal.y1+30); 
     pop();
 
@@ -68,8 +62,6 @@ function drawPistil(){
     push();
     noStroke();
     fill(petal.fills.yellow);
-    petal.x1 = 400;
-    petal.y1 = 400;
     triangle(petal.x1, petal.y1+20, petal.x1+10, petal.y1+10, petal.x1-10, petal.y1+10); 
     pop();
 }
@@ -80,52 +72,40 @@ function drawBottomPetal(){
     push();
     noStroke();
     fill(petal.fills.light);
-    arc(336, 550, 170, 130, 100, 255, OPEN);
+    arc(petal.x1-64, petal.y1+150, 170, 130, 100, 255, OPEN);
     pop();
 
     //do another light arc (a partly missing circle)) as the curve of the outter petal
     push();
     noStroke();
     fill(petal.fills.light);
-    arc(465, 550, 170, 130, 200, 180, OPEN);
+    arc(petal.x1+64, petal.y1+150, 170, 130, 200, 180, OPEN);
     pop();
 
     //do a light triangle for the outter part of the petal
     push();
     noStroke();
     fill(petal.fills.light2);
-    petal.x1 = 400;
-    petal.y1 = 400;
-    petal.x2 = petal.x1 + 140;
-    petal.y2 = petal.y1 + 120;
-    petal.x3 = petal.x1 - 140;
-    petal.y3 = petal.y2;
-    triangle(petal.x1, petal.y1, petal.x2, petal.y2, petal.x3, petal.y3); 
+    triangle(petal.x1, petal.y1, petal.x1+140, petal.y1+120, petal.x1-140, petal.y1+120); 
     pop();
 
     //do a dark blue triangle for the inner part of the petal
     push();
     noStroke();
     fill(petal.fills.dark);
-    petal.x1 = 400;
-    petal.y1 = 400;
-    petal.x2 = petal.x1 + 100;
-    petal.y2 = petal.y1 + 100;
-    petal.x3 = petal.x1 - 100;
-    petal.y3 = petal.y2;
-    triangle(petal.x1, petal.y1, petal.x2, petal.y2, petal.x3, petal.y3); 
+    triangle(petal.x1, petal.y1, petal.x1+100, petal.y1+100, petal.x1-100, petal.y1+100); 
     pop();
 
     //do a dark blue arc (a partly missing circle)) as the curve of the petal
     push();
     fill(petal.fills.dark);
-    arc(petal.x1-47, 525, 120, 100, 100, 255, OPEN);
+    arc(petal.x1-47, petal.y1+125, 120, 100, 100, 255, OPEN);
     pop();
 
     //do another blue arc as the curve of the petal
     push();
     fill(petal.fills.dark);
-    arc(450, 525, 120, 100, 200, 180, OPEN);
+    arc(petal.x1+50, petal.y1+125, 120, 100, 200, 180, OPEN);
     pop();
 }
 
@@ -134,26 +114,26 @@ function drawSidePetal(){
     push();
     // noStroke();
     fill(petal.fills.light);
-    arc(490, 425, 240, 180, -PI/5, 1.1*PI, OPEN);
+    arc(petal.x1+90, petal.y1+25, 240, 180, -PI/5, 1.1*PI, OPEN);
     pop();
 
     //do a light art as the curve of the left petal
     push();
     // noStroke();
     fill(petal.fills.light);
-    arc(330, 400, 250, 240, 0, 1.1*PI, OPEN);
+    arc(petal.x1-70, petal.y1, 250, 240, 0, 1.1*PI, OPEN);
     pop();
 
   // do an dark blue ellipse for the inner part of the right petal
     push();
     fill(petal.fills.dark);
-    ellipse(450, 430, 140,70);
+    ellipse(petal.x1+50, petal.y1+30, 140,70);
     pop();
 
   // do an dark blue ellipse for the inner part of the left petal
     push();
     fill(petal.fills.dark);
-    ellipse(350, 430, 140,70);
+    ellipse(petal.x1-50, petal.y1+30, 140,70);
     pop();
 }
 
@@ -161,13 +141,13 @@ function drawTopPetal(){
     //draw the top right petal
     push();
     fill(petal.fills.light3);
-    ellipse(450, 350, 200,150);
+    ellipse(petal.x1+50, petal.y1-50, 200,150);
     pop();
 
     //draw the top left petal
     push();
     fill(petal.fills.light2);
-    ellipse(360, 350, 200,150);
+    ellipse(petal.x1-40, petal.y1-40, 200,150);
     pop();
 
 }
