@@ -48,6 +48,7 @@ function setup() {
 function draw() {
     drawPetal();
     drawPistil();
+    console.log(drawPetal);
 }
 
 //creating the pistil, two parts a large white triangle and a small yellow triangle
@@ -80,6 +81,7 @@ function drawPistil(){
 }
 
 function drawPetal(){
+    //do a dark blue triangle for the inner part of the petal
     push();
     noStroke();
     fill(petal.fills.dark);
@@ -92,7 +94,21 @@ function drawPetal(){
     triangle(petal.x1, petal.y1, petal.x2, petal.y2, petal.x3, petal.y3); 
     pop();
 
+    // a not used ellipse version 
+    // push();
+    // fill(petal.fills.dark);
+    // ellipse(435, petal.y2, 100,70);
+    // pop();
+
+    //do a dark blue arc (a partly missing circle)) as the curve of the petal
     push();
     fill(petal.fills.dark);
-    arc(348, 530, 120, 100, 0, PI + QUARTER_PI, OPEN);
+    arc(353, 525, 120, 100, 100, 255, OPEN);
+    pop();
+
+    //do another blue art as the curve of the petal
+    push();
+    fill(petal.fills.dark);
+    arc(450, 525, 120, 100, 200, 180, OPEN);
+    pop();
 }
