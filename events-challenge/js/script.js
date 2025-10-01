@@ -64,3 +64,7 @@ function displayScore() {
 function lose(){
     gameOver = true;
 }
+function keyReleased(){
+    lose();
+    console.log(keyReleased);
+}
