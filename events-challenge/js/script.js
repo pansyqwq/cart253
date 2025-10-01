@@ -1,6 +1,6 @@
 /**
- * The Only Move Is Not To Play
- * Ziyan Pan
+ * Event challenge
+ * Ziyan Pan teamates: Wenni Wang, Leah
  *
  * A game where your score increases so long as you do nothing.
  */
@@ -59,4 +59,8 @@ function displayScore() {
   textAlign(CENTER, CENTER);
   text(floor(score), width/2, height/2);
   pop();
+}
+
+function lose(){
+    gameOver = true;
 }
