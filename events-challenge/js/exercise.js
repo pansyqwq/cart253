@@ -4,7 +4,8 @@ let face ={
     x:0,
     y:0,
     size:20,
-    color:"#5fd47eff"//default color
+    color:"#5fd47eff",//default color
+    isGreen:true
 
 }
 
@@ -27,7 +28,15 @@ function mousePressed(){
     // face.y= mouseY;
     let distance = dist(face.x,face.y,mouseX, mouseY);
     if(distance<face.size/2){
-        face.color = "#000000"
+        if(face.isGreen === true){
+            face.color = "#749bdfff";
+            face.isGreen = false;
+        }
+        else{
+             face.color = "#5fd47eff";
+             face.isGreen = true;
+        }
+        
     }
     
 }
