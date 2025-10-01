@@ -68,3 +68,17 @@ function keyReleased(){
     lose();
     console.log(keyReleased);
 }
+
+function mouseReleased(){
+    lose();
+    console.log(mouseReleased);
+}
+function mouseWheel() {
+    lose();
+    console.log(mouseWheel);
+}
+
+// function mouseMoved(){
+//     lose();
+//     console.log(mouseMoved);
+// }
