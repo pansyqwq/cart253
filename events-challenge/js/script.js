@@ -61,24 +61,44 @@ function displayScore() {
   pop();
 }
 
+//lose the game
 function lose(){
     gameOver = true;
 }
+
+//lose the game when key released
 function keyReleased(){
     lose();
     console.log(keyReleased);
 }
 
+//lose the game when mouse released
 function mouseReleased(){
     lose();
     console.log(mouseReleased);
 }
+//lose the game when mouseWheel moves
 function mouseWheel() {
     lose();
     console.log(mouseWheel);
 }
 
-// function mouseMoved(){
-//     lose();
-//     console.log(mouseMoved);
-// }
+//lose the game when mouse moved
+function mouseMoved(){
+    lose();
+    console.log(mouseMoved);
+}
+
+//lose the game when offline
+window.addEventListener('offline',()=>{ //lambda function, define another function inside a function
+    console.log("user is offline");
+    lose();
+})
+
+// lose the game when visibility change
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    lose();
+    console.log("user lost focus");
+  } 
+});
