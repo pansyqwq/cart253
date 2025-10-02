@@ -67,27 +67,40 @@ function lose(){
 }
 
 //lose the game when key released
-function keyReleased(){
+window.addEventListener("keyup",function(){
     lose();
-    console.log(keyReleased);
-}
+    console.log("keyup");
+})
 
-//lose the game when mouse released
-function mouseReleased(){
+// lose the game when mouse released
+window.addEventListener("mouseup",function(){
     lose();
-    console.log(mouseReleased);
-}
+    console.log("mouseReleased");
+})
+
+// //lose the game when mouseWheel moves
+// function mouseWheel() {
+//     lose();
+//     console.log(mouseWheel);
+// }
+
 //lose the game when mouseWheel moves
-function mouseWheel() {
+window.addEventListener("wheel",function(){
     lose();
-    console.log(mouseWheel);
-}
+    console.log("mouseWheel");
+})
+
+// //lose the game when mouse moved
+// function mouseMoved(){
+//     lose();
+//     console.log(mouseMoved);
+// }
 
 //lose the game when mouse moved
-function mouseMoved(){
+window.addEventListener("mousemove",function(){
     lose();
-    console.log(mouseMoved);
-}
+    console.log("mouseMoved");
+})
 
 //lose the game when offline
 window.addEventListener('offline',()=>{ //lambda function, define another function inside a function
