@@ -12,12 +12,22 @@
 
 6. Make the froh learn a skill, to make the eating easier. Ex: skill name: big mouth. After eating 4 flies, the frog will have a large tongue for the next eating attempt, the skill will need to recharge after used. （many games have skills for the characters, Can I also do one for our frog？）
 
-7. When you complete a level, a new character lizard will be unlocked. The lizard can have different statistics compared to frog, for example：attack faster but move slower. The player can switch characters freely between the two. （Can we adjust the abilities of the frog？ what if it's a new character？）
+7. When you complete a level, a new character lizard will be unlocked. The lizard can have different statistics compared to frog, for example：attack faster but move slower. The player can switch characters freely between the two. (Can we adjust the abilities of the frog？ what if it's a new character？)
 
 8. The frog will upgrade based on the total number of flies eaten in all the levels.（Ex： eaten total 30 flies, upgrade to level 2）The upgrade will increase the abilities of the frog, make it faster and bigger. (A lot of games have upgrade system, can we do the same thing for our game？)
 
 9. The frog will be a long human arm trying to pet a cat. The fly will be a cat who runs around and doesn't want to be pet (I want to pet my cat so bad, Can I do a game about that？)
 
 10. Continue on the 9th idea. There will be mice running around as well, we don't want to touch the mice. We need to avoid touching it. Trigger fail scene if touched the mouse. (Getting my idea from game Fruit Ninja, in that game u need to avoid cutting the bomb)
+
+11. Cats will appear in different color and pattern. they will have different speed or routs as well. There will be a collection system that you try to pet all types of cats. (Getting my idea from the collection system of Stardew vally)
+
+12. A special achievement will be given when all cat types were collected, a acene of you worshiped by a pile of cats will be shown. (Can we do a altimate reward for the big achivement so that the player will feel super rewarded afterwards?)
+
+13. Special tool catnip/ treats that can be used once a level, the function varies. Ex: the cat on screen will move towards you (Can we design special tools to make the player's life easier?)
+
+14. For the cat collection system, make the page more fun and interactive. Each cat collected will appear in a house, they walk around in the house and you can pet them by clicking. (I just really want to have a house of cats)
+
+15. In easy mode, there will be 2 hands avaliable, if the player click two cordinates within a short period of time two hands will appear on the screen reaching the coordinates ( I do have two hands right, both of my hands will try to pet the cat)
 
 
