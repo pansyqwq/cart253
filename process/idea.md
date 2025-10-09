@@ -30,4 +30,13 @@
 
 15. In easy mode, there will be 2 hands avaliable, if the player click two cordinates within a short period of time two hands will appear on the screen reaching the coordinates ( I do have two hands right, both of my hands will try to pet the cat)
 
+16. The frog will be a gun weapon and the fly will be the enemy. the gun will shoot a bullet to the target when pressed (getting my idea from classic shooting games)
+
+17. Our gun will be stationary but the shooting angle can be rotated acccording to the coordinats of the mouse (Can we introduce something involving rotation?)
+
+18. The frog will be a jet and the fly will be enemy jet. Our jet will throw bomb at the enemy when pressed. The enemy jet will also shoot us with bombs, need to avoid attack from enemy as well (getting my idea from my childhood jet games)
+
+19. Our frog will be a charging cable and the fly will be the receptacle. We want to plug the cable into the receptacle. (They are so hard to plug in! I want to annoy my players as well!)
+
+20. There will be differnt types of cables and receptacles, the player will need to match them. It would not plug if the shapes are different (further challenging the player, gaining my idea from real life)
 
