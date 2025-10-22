@@ -24,7 +24,7 @@ const ball = {
     height: 10,
     velocity: {
         x: 0,
-        y: 10
+        y: 2
     }
 };
 
@@ -63,21 +63,22 @@ function draw() {
  * Moves the paddle
  */
 function movePaddle(paddle) {
-
+ paddle.x = mouseX;
 }
 
 /**
  * Moves the ball passed in as a parameter
  */
 function moveBall(ball) {
-
+ ball.x += ball.velocity.x;
+ ball.y += ball.velocity.y;
 }
 
 /**
  * Bounces the provided ball off the provided paddle
  */
 function handleBounce(ball, paddle) {
-
+    
 }
 
 /**
