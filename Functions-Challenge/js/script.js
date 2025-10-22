@@ -57,6 +57,8 @@ function draw() {
 
     drawPaddle(paddle);
     drawBall(ball);
+
+    console.log(checkOverlap(ball,paddle)); 
 }
 
 /**
@@ -78,7 +80,12 @@ function moveBall(ball) {
  * Bounces the provided ball off the provided paddle
  */
 function handleBounce(ball, paddle) {
-    
+    console.log("ball bounces")
+    if(checkOverlap(ball,paddle) === true){
+        ball.velocity.y= -ball.velocity.y;
+    }else if ( ball.y > 300){
+        ball.velocity.y= -ball.velocity.y;
+    }
 }
 
 /**
@@ -111,9 +118,9 @@ function drawBall(ball) {
  * their rectangles, and that rectA and rectB are displayed CENTERED on their
  * x,y coordinates.
  */
-function checkOverlap(rectA, rectB) {
-  return (rectA.x + rectA.width/2 > rectB.x - rectB.width/2 &&
-          rectA.x - rectA.width/2 < rectB.x + rectB.width/2 &&
-          rectA.y + rectA.height/2 > rectB.y - rectB.height/2 &&
-          rectA.y - rectA.height/2 < rectB.y + rectB.height/2);
+function checkOverlap(ball, paddle) {
+  return (ball.x + ball.width/2 > paddle.x - paddle.width/2 &&
+          ball.x - ball.width/2 < paddle.x + paddle.width/2 &&
+          ball.y + ball.height/2 > paddle.y - paddle.height/2 &&
+          ball.y - ball.height/2 < paddle.y + paddle.height/2);
 }
