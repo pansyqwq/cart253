@@ -83,7 +83,7 @@ function handleBounce(ball, paddle) {
     console.log("ball bounces")
     if(checkOverlap(ball,paddle) === true){
         ball.velocity.y= -ball.velocity.y;
-    }else if ( ball.y > 300){
+    }else if ( ball.y > 300 || ball.y < 0){
         ball.velocity.y= -ball.velocity.y;
     }
 }
