@@ -28,6 +28,17 @@ const ball = {
     }
 };
 
+const ball2 = {
+    x: 500,
+    y: 30,
+    width: 15,
+    height: 15,
+    velocity: {
+        x: 0,
+        y: 5
+    }
+};
+
 // Our paddle
 const paddle = {
     x: 300,
