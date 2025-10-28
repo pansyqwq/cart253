@@ -32,8 +32,9 @@ const frog = {
         state: "idle" // State can be: idle, outbound, inbound
     },
     data: {
-        miss:0, // The number of times the person has missed
-        catch:0 // The number of catches
+        catch:0, // The number of catches
+        tries:0, // The total attemps
+        miss: 0 // The number of times the person has missed
     }
 
 };
@@ -179,6 +180,14 @@ function moveTongue() {
     // If the tongue is inbound, it moves down
     else if (frog.tongue.state === "inbound") {
         frog.tongue.y += frog.tongue.speed;
+        //if we are in game mode, count the number of tries and misses
+        if(gameUI === "game" && frog.tongue.y === 460){
+        frog.data.tries += 1; // adding a number to tries when the tongue was triggered
+        console.log ("number of tries", frog.data.tries);
+        frog.data.miss = frog.data.tries - frog.data.catch; // calculating the number missed
+        console.log ("number of miss", frog.data.miss);
+        }
+        
         // The tongue stops if it hits the bottom
         if (frog.tongue.y >= height) {
             frog.tongue.state = "idle";
