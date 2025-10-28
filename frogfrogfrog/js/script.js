@@ -78,7 +78,7 @@ function GameStartUI() {
     moveTongue();
     drawFrog();
 
-    //the UI will change to game UI when trigger
+    //the UI will change to game UI when triggered
     if(frog.tongue.y <= height/2){
         gameUI = "game";
         frog.tongue.state = "idle"; // make the tongue stop moving 
@@ -96,10 +96,18 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    if(frog.data.miss > 5){
+        gameUI = "Over";
+    }
 }
 
 function gameOverUI(){
     background("#ebb987ff");
+    push();
+    textSize(48);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Game Over", width / 2, height / 2);
 }
 
 /**
@@ -117,6 +125,8 @@ function draw() {
         GameStartUI();
     } else if (gameUI === "game") {
         gameState();
+    } else if (gameUI === "Over"){
+        gameOverUI();
     }
 }
 
@@ -187,7 +197,7 @@ function moveTongue() {
         frog.data.miss = frog.data.tries - frog.data.catch; // calculating the number missed
         console.log ("number of miss", frog.data.miss);
         }
-        
+
         // The tongue stops if it hits the bottom
         if (frog.tongue.y >= height) {
             frog.tongue.state = "idle";
