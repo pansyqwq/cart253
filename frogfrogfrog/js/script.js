@@ -28,10 +28,14 @@ const frog = {
         x: undefined,
         y: 480,
         size: 20,
-        speed: 20,
-        // Determines how the tongue moves each frame
+        speed: 20,// Determines how the tongue moves each frame
         state: "idle" // State can be: idle, outbound, inbound
+    },
+    data: {
+        miss:0, // The number of times the person has missed
+        catch:0 // The number of catches
     }
+
 };
 
 let gameUI = "start"; // the gameUI can be: start, game, over
@@ -49,7 +53,7 @@ const fly = {
 //Our Starting Scene 
 //has instructions and start the game button
 function GameStartUI() {
-    //setting up background and instructions
+    //setting up background and instruction texts
     push();
     background("#67d39fff");
     textSize(20);
@@ -91,7 +95,10 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+}
 
+function gameOverUI(){
+    background("#ebb987ff");
 }
 
 /**
@@ -216,6 +223,8 @@ function checkTongueFlyOverlap() {
     if (eaten) {
         // Reset the fly
         resetFly();
+        frog.data.catch += 1;
+        console.log("catched:", frog.data.catch);
         // Bring back the tongue
         frog.tongue.state = "inbound";
     }
