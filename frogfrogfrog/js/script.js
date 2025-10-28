@@ -49,41 +49,49 @@ const fly = {
 //Our Starting Scene 
 //has instructions and start the game button
 function GameStartUI() {
+    //setting up background and instructions
     push();
     background("#67d39fff");
     textSize(20);
-    textAlign(LEFT, CENTER);
-    text("Instructions:", width / 4, height /6);
+    textAlign(LEFT, CENTER); //align to the left
+    text("Instructions:", width / 4, height / 6); // the text is displayed at x: width/4 and y: height/6
     text("* - Move the frog with your mouse", width / 4, height / 6 + 30);
     text("* - Click to launch the tongue", width / 4, height / 6 + 60);
     text("* - Catch flies", width / 4, height / 6 + 90);
     pop();
 
+    //text of starting the game 
     push();
     textSize(48);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text("Start the Game", width / 2, height / 2);
+    text("Press to Start the Game", width / 2, height / 2);
     console.log("instruction scene");
     pop();
 
-    moveFrog();
+    //the frog, and the tongue will stick out when pressed
     moveTongue();
     drawFrog();
-    mousePressed();
+
+    //the UI will change to game UI when trigger
+    if(frog.tongue.y <= height/2){
+        gameUI = "game";
+        frog.tongue.state = "idle"; // make the tongue stop moving 
+        frog.tongue.y = height;// set the rongue height to the bottom
+        console.log("game has started")
+    }
 }
 
 //the actions of the game itself
 function gameState() {
-    if (gameUI === "game") {
-        background("#87ceeb");
-        moveFly();
-        drawFly();
-        moveFrog();
-        moveTongue();
-        drawFrog();
-        checkTongueFlyOverlap();
-    }
+    background("#87ceeb");
+    moveFly();
+    drawFly();
+    moveFrog();
+    moveTongue();
+    drawFrog();
+    checkTongueFlyOverlap();
+
 }
 
 /**
@@ -97,8 +105,11 @@ function setup() {
 }
 
 function draw() {
-    GameStartUI();
-    gameState();
+    if (gameUI === "start") {
+        GameStartUI();
+    } else if (gameUI === "game") {
+        gameState();
+    }
 }
 
 /**
