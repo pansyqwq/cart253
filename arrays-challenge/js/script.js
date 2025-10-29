@@ -12,6 +12,7 @@
  */
 
 let ball = undefined; // Will create it with createBall()
+let balloon = [];// creating an empty array for balls
 
 /**
  * Create the canvas and the ball
@@ -58,7 +59,7 @@ function draw() {
 /**
  * Moves the ball according to its velocity
  */
-function moveBall(ball) {
+function moveBall(ball) { //Convert to functions with parameters
   ball.x += ball.velocity.x;
   ball.y += ball.velocity.y;
 }
