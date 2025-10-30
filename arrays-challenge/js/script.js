@@ -31,8 +31,8 @@ function createBall() {
     // Create a ball object with appropriate properties
     const newBall = {
         // Position and dimensions
-        x: 200,
-        y: 200,
+        x: mouseX,
+        y: mouseY,
         size: 20,
         // Colour
         fill: "#000000",
@@ -40,6 +40,9 @@ function createBall() {
         velocity: {
             x: random(-5, 5),
             y: random(-5, 5)
+            // x: mouseX-pmouseX,
+            // y: mouseY-pmouseY,
+            
         }
     };
     return newBall;
@@ -51,14 +54,17 @@ function createBall() {
 function draw() {
     background("#87ceeb");
 
-
-
     for (let ball of balloons) {
         moveBall(ball);
         bounceBall(ball);
         drawBall(ball);
     }
 
+}
+
+function mousePressed(){
+    let newBall = createBall();
+    balloons.push(newBall);
 }
 
 /**
@@ -72,7 +78,7 @@ function moveBall(ball) { //Convert to functions with parameters
 /**
  * Bounces the ball off the walls
  */
-function bounceBall() {
+function bounceBall(ball) {
     // Check if the ball has reached the left or right
     const bounceX = (ball.x > width || ball.x < 0);
     // Check if the ball has reached the top or bottom
@@ -98,3 +104,5 @@ function drawBall(ball) {
     ellipse(ball.x, ball.y, ball.size);
     pop();
 }
+
+
