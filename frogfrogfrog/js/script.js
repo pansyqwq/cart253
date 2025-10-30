@@ -1,6 +1,6 @@
 /**
- * Frogfrogfrog
- * Pippin Barr
+ * CatCatCat
+ * Ziyan Pan
  * 
  * A game of catching flies with your frog-tongue
  * 
@@ -14,6 +14,16 @@
  */
 
 "use strict";
+
+//Our cat variables
+let catFrames = [];
+let frameIndex = 0;  
+const cat = {
+    x:100,
+    y:200,
+    size: 150
+};
+
 
 // Our frog
 const frog = {
@@ -51,18 +61,27 @@ const fly = {
     speed: 3
 };
 
+function preload(){
+    for (let i = 0; i < 4; i++) {
+    catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
+    console.log("cat frame is added")
+  }
+}
+
 //Our Starting Scene 
 //has instructions and start the game button
 function GameStartUI() {
     //setting up background and instruction texts
     push();
     background("#67d39fff");
+    catWalk();// cat idel animation
+
     textSize(20);
     textAlign(LEFT, CENTER); //align to the left
-    text("Instructions:", width / 4, height / 6); // the text is displayed at x: width/4 and y: height/6
-    text("* - Move the frog with your mouse", width / 4, height / 6 + 30);
-    text("* - Click to launch the tongue", width / 4, height / 6 + 60);
-    text("* - Catch flies", width / 4, height / 6 + 90);
+    text("Instructions:", width / 4, height / 5); // the text is displayed at x: width/4 and y: height/6
+    text("* - Move the frog with your mouse", width / 4, height / 5 + 30);
+    text("* - Click to launch the tongue", width / 4, height / 5 + 60);
+    text("* - Catch flies", width / 4, height / 5 + 90);
     pop();
 
     //text of starting the game 
@@ -70,7 +89,7 @@ function GameStartUI() {
     textSize(48);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text("Press to Start the Game", width / 2, height / 2);
+    text("Press to Start the Game", width / 2, height / 8);
     console.log("instruction scene");
     pop();
 
@@ -101,6 +120,7 @@ function gameState() {
     }
 }
 
+//Our ending scene
 function gameOverUI(){
     background("#ebb987ff");
     push();
@@ -108,6 +128,15 @@ function gameOverUI(){
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
     text("Game Over", width / 2, height / 2);
+}
+
+function catWalk(){
+    image(catFrames[frameIndex], width/2, height/2, 400, 400);
+    // console.log("there is an image",Image);
+    if (frameCount % 15 === 0) {
+    frameIndex = (frameIndex + 1) % catFrames.length;
+  }
+//   console.log("the cat is walking")
 }
 
 /**
