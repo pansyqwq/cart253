@@ -31,6 +31,7 @@ const frog = {
     body: {
         x: 320,
         y: 520,
+        hand: 50,
         size: 150,
         color: "#13769dff"
     },
@@ -251,7 +252,7 @@ function drawFrog() {
     // Draw the hand on top of the arm
     push();
     textAlign(CENTER, CENTER);
-    textSize(50);
+    textSize(frog.body.hand);
     text("🖐", frog.tongue.x, frog.tongue.y); 
    
     pop();
@@ -274,7 +275,7 @@ function checkTongueFlyOverlap() {
     // Get distance from tongue to fly
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
     // Check if it's an overlap
-    const eaten = (d < frog.tongue.size / 2 + fly.size / 2);
+    const eaten = (d < frog.body.hand / 2 + fly.size / 2);
     if (eaten) {
         // Reset the fly
         resetFly();
