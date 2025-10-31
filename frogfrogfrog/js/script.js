@@ -79,10 +79,14 @@ function preload(){
   }
 }
 
-function catWalk(){
+function drawCat(x,y,w,h){
     imageMode(CENTER); // draw from the center instead of top-left
-    image(catFrames[frameIndex], 320, 240, 400, 400);
+    // image(catFrames[frameIndex], 320, 240, 400, 400);
+    image(catFrames[frameIndex], x, y, w, h);
     // console.log("there is an image",Image);
+}
+
+function catWalk(){
     if (frameCount % 15 === 0) {
     frameIndex = (frameIndex + 1) % catFrames.length;
   }
@@ -95,6 +99,7 @@ function GameStartUI() {
     //setting up background and instruction texts
     push();
     background("#67d39fff");
+    drawCat(320,240,400,400);
     catWalk();// cat idel animation
 
     textSize(20);
@@ -178,6 +183,9 @@ function moveFly() {
  * draw the heart of the cat
  */
 function drawFly() {
+    push();
+    catWalk()
+    pop();
     push();
     // noStroke();
     // fill("#000000");
