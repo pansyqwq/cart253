@@ -59,7 +59,7 @@ let gameUI = "start"; // the gameUI can be: start, game, over
 const fly = {
     x: 0,
     y: 200, // Will be random
-    size: 10,
+    size: 30,
     speed: 3
 };
 
@@ -136,7 +136,7 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
-    if(frog.data.miss > 5){
+    if(frog.data.miss > 2){
         gameUI = "Over";
     }
 }
@@ -175,13 +175,16 @@ function moveFly() {
 }
 
 /**
- * Draws the fly as a black circle
+ * draw the heart of the cat
  */
 function drawFly() {
     push();
-    noStroke();
-    fill("#000000");
-    ellipse(fly.x, fly.y, fly.size);
+    // noStroke();
+    // fill("#000000");
+    // ellipse(fly.x, fly.y, fly.size);
+    textAlign(CENTER, CENTER);
+    textSize(fly.size);
+    text("💖", fly.x, fly.y); 
     pop();
 }
 
