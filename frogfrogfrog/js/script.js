@@ -184,7 +184,8 @@ function moveFly() {
  */
 function drawFly() {
     push();
-    catWalk()
+    drawCat(fly.x, fly.y, 300, 300);
+    catWalk();
     pop();
     push();
     // noStroke();
