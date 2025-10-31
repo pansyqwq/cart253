@@ -31,7 +31,8 @@ const frog = {
     body: {
         x: 320,
         y: 520,
-        size: 150
+        size: 150,
+        color: "#13769dff"
     },
     // The frog's tongue has a position, size, speed, and state
     tongue: {
@@ -238,24 +239,27 @@ function moveTongue() {
  * Displays the tongue (tip and line connection) and the frog (body)
  */
 function drawFrog() {
-    // Draw the tongue tip
-    push();
-    fill("#ff0000");
-    noStroke();
-    ellipse(frog.tongue.x, frog.tongue.y, frog.tongue.size);
-    pop();
+    
 
-    // Draw the rest of the tongue
+    // Draw the arm (originally the tongue)
     push();
-    stroke("#ff0000");
+    stroke(frog.body.color);
     strokeWeight(frog.tongue.size);
     line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
     pop();
 
-    // Draw the frog's body
+    // Draw the hand on top of the arm
     push();
-    fill("#00ff00");
-    noStroke();
+    textAlign(CENTER, CENTER);
+    textSize(50);
+    text("🖐", frog.tongue.x, frog.tongue.y); 
+   
+    pop();
+
+    // Draw the character's body
+    push();
+    fill(frog.body.color);
+    // noStroke();
     textSize(100);
     ellipse(frog.body.x, frog.body.y, frog.body.size);
     textAlign(CENTER, CENTER);
