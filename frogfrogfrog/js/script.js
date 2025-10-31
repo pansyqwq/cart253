@@ -81,7 +81,6 @@ function preload(){
 
 function drawCat(x,y,w,h){
     imageMode(CENTER); // draw from the center instead of top-left
-    // image(catFrames[frameIndex], 320, 240, 400, 400);
     image(catFrames[frameIndex], x, y, w, h);
     // console.log("there is an image",Image);
 }
