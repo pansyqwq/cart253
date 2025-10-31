@@ -2,12 +2,12 @@
  * CatCatCat
  * Ziyan Pan
  * 
- * A game of catching flies with your frog-tongue
+ * A game of catching cats with your arm
  * 
  * Instructions:
- * - Move the frog with your mouse
- * - Click to launch the tongue
- * - Catch flies
+ * - Move the character with your mouse
+ * - Click to launch the arm
+ * - Catch Cats
  * 
  * Made with p5
  * https://p5js.org/
@@ -25,9 +25,9 @@ const cat = {
 };
 
 
-// Our frog
+// Our frog/ character
 const frog = {
-    // The frog's body has a position and size
+    // The character's body has a position and size
     body: {
         x: 320,
         y: 520,
@@ -35,7 +35,7 @@ const frog = {
         size: 150,
         color: "#13769dff"
     },
-    // The frog's tongue has a position, size, speed, and state
+    // The character's arm has a position, size, speed, and state
     tongue: {
         x: undefined,
         y: 480,
@@ -54,7 +54,7 @@ const frog = {
 let gameUI = "start"; // the gameUI can be: start, game, over
 
 
-// Our fly
+// Our fly/ Cat
 // Has a position, size, and speed of horizontal movement
 const fly = {
     x: 0,
@@ -64,18 +64,19 @@ const fly = {
 };
 
 /**
- * Creates the canvas and initializes the fly
+ * Creates the canvas and initializes the cat
  */
 function setup() {
     createCanvas(640, 480);
-    // Give the fly its first random position
+    // Give the cat its first random position
     resetFly();
 }
 
+//preload the images
 function preload(){
     for (let i = 0; i < 4; i++) {
     catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
-    console.log("cat frame is added")
+    console.log("cat frame was added")
   }
 }
 
@@ -103,10 +104,10 @@ function GameStartUI() {
 
     textSize(20);
     textAlign(LEFT, CENTER); //align to the left
-    text("Instructions:", width / 4, height / 5); // the text is displayed at x: width/4 and y: height/6
-    text("* - Move the frog with your mouse", width / 4, height / 5 + 30);
-    text("* - Click to launch the tongue", width / 4, height / 5 + 60);
-    text("* - Catch flies", width / 4, height / 5 + 90);
+    text("Instructions:", width / 4, height / 5); // the text is displayed at x: width/4 and y: height/5
+    text("* - Move the character with your mouse", width / 4, height / 5 + 30);
+    text("* - Click to launch the hand", width / 4, height / 5 + 60);
+    text("* - Catch Cats", width / 4, height / 5 + 90);
     pop();
 
     //text of starting the game 
@@ -118,7 +119,7 @@ function GameStartUI() {
     console.log("instruction scene");
     pop();
 
-    //the frog, and the tongue will stick out when pressed
+    //the characteris placed, and the arm will stick out when pressed
     moveTongue();
     drawFrog();
 
@@ -140,8 +141,8 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
-    if(frog.data.miss > 2){
-        gameUI = "Over";
+    if(frog.data.miss > 2){ 
+        gameUI = "Over";// the game is over if u missed 3 times
     }
 }
 
@@ -155,6 +156,7 @@ function gameOverUI(){
     text("Game Over", width / 2, height / 2);
 }
 
+//switching the scenes
 function draw() {
     if (gameUI === "start") {
         GameStartUI();
@@ -166,20 +168,21 @@ function draw() {
 }
 
 /**
- * Moves the fly according to its speed
- * Resets the fly if it gets all the way to the right
+ * Moves the Cat according to its speed
+ * load end page if it gets all the way to the right
  */
 function moveFly() {
-    // Move the fly
+    // Move the cat(originally fly)
     fly.x += fly.speed;
-    // Handle the fly going off the canvas
+    // Handle the cat going off the canvas
     if (fly.x > width) {
-        resetFly();
+        // resetFly();
+        gameUI = "Over"//game over when cat ran away
     }
 }
 
 /**
- * draw the heart of the cat
+ * draw the cat and the heart of the cat
  */
 function drawFly() {
     push();
@@ -197,25 +200,25 @@ function drawFly() {
 }
 
 /**
- * Resets the fly to the left with a random y
+ * Resets the cat to the left with a random y
  */
 function resetFly() {
     fly.x = 0;
-    fly.y = random(0, 300);
+    fly.y = random(20, 300);
 }
 
 /**
- * Moves the frog to the mouse position on x
+ * Moves the character to the mouse position on x
  */
 function moveFrog() {
     frog.body.x = mouseX;
 }
 
 /**
- * Handles moving the tongue based on its state
+ * Handles moving the arm based on its state
  */
 function moveTongue() {
-    // Tongue matches the frog's x
+    // Tongue (arm) matches the character's x
     frog.tongue.x = frog.body.x;
     // If the tongue is idle, it doesn't do anything
     if (frog.tongue.state === "idle") {
@@ -248,7 +251,7 @@ function moveTongue() {
 }
 
 /**
- * Displays the tongue (tip and line connection) and the frog (body)
+ * Displays the tongue (arm) and the frog (character's body)
  */
 function drawFrog() {
     
@@ -280,19 +283,19 @@ function drawFrog() {
 }
 
 /**
- * Handles the tongue overlapping the fly
+ * Handles the arm overlapping the cat
  */
 function checkTongueFlyOverlap() {
-    // Get distance from tongue to fly
+    // Get distance from hand to cat
     const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
     // Check if it's an overlap
     const eaten = (d < frog.body.hand / 2 + fly.size / 2);
     if (eaten) {
-        // Reset the fly
+        // Reset the cat
         resetFly();
         frog.data.catch += 1;
         console.log("catched:", frog.data.catch);
-        // Bring back the tongue
+        // Bring back the arm
         frog.tongue.state = "inbound";
     }
 }
