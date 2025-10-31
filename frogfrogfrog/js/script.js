@@ -61,11 +61,30 @@ const fly = {
     speed: 3
 };
 
+/**
+ * Creates the canvas and initializes the fly
+ */
+function setup() {
+    createCanvas(640, 480);
+    // Give the fly its first random position
+    resetFly();
+}
+
 function preload(){
     for (let i = 0; i < 4; i++) {
     catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
     console.log("cat frame is added")
   }
+}
+
+function catWalk(){
+    imageMode(CENTER); // draw from the center instead of top-left
+    image(catFrames[frameIndex], 320, 240, 400, 400);
+    // console.log("there is an image",Image);
+    if (frameCount % 15 === 0) {
+    frameIndex = (frameIndex + 1) % catFrames.length;
+  }
+//   console.log("the cat is walking")
 }
 
 //Our Starting Scene 
@@ -128,25 +147,6 @@ function gameOverUI(){
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
     text("Game Over", width / 2, height / 2);
-}
-
-function catWalk(){
-    image(catFrames[frameIndex], width/2, height/2, 400, 400);
-    // console.log("there is an image",Image);
-    if (frameCount % 15 === 0) {
-    frameIndex = (frameIndex + 1) % catFrames.length;
-  }
-//   console.log("the cat is walking")
-}
-
-/**
- * Creates the canvas and initializes the fly
- */
-function setup() {
-    createCanvas(640, 480);
-
-    // Give the fly its first random position
-    resetFly();
 }
 
 function draw() {
@@ -256,7 +256,10 @@ function drawFrog() {
     push();
     fill("#00ff00");
     noStroke();
+    textSize(100);
     ellipse(frog.body.x, frog.body.y, frog.body.size);
+    textAlign(CENTER, CENTER);
+    text("🥺", frog.body.x, frog.body.y-100); 
     pop();
 }
 
