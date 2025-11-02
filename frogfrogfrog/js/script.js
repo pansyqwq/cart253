@@ -21,7 +21,7 @@ let frameIndex = 0;
 const cat = {
     x:100,
     y:200,
-    size: 150
+    size: 150,
 };
 
 
@@ -40,13 +40,15 @@ const frog = {
         x: undefined,
         y: 480,
         size: 20,
-        speed: 20,// Determines how the tongue moves each frame
+        speed: 10,// Determines how the tongue moves each frame
         state: "idle" // State can be: idle, outbound, inbound
     },
     data: {
         catch:0, // The number of catches
         tries:0, // The total attemps
-        miss: 0 // The number of times the person has missed
+        miss: 0, // The number of times the person has missed
+        mood: "normal" // can be: normal, happy, sad, the mood of the character
+
     }
 
 };
@@ -245,6 +247,7 @@ function moveTongue() {
 
         // The tongue stops if it hits the bottom
         if (frog.tongue.y >= height) {
+            // data.mood = "normal";
             frog.tongue.state = "idle";
         }
     }
@@ -254,7 +257,14 @@ function moveTongue() {
  * Displays the tongue (arm) and the frog (character's body)
  */
 function drawFrog() {
-    
+    let faceEmoji = "🥺"; // default normal mode
+if (frog.data.mood === "normal") {
+    faceEmoji = "🥺";
+} else if (frog.data.mood === "sad") {
+    faceEmoji = "😭";
+} else if (frog.data.mood === "happy"){
+    faceEmoji = "🥰";
+}
 
     // Draw the arm (originally the tongue)
     push();
@@ -268,7 +278,6 @@ function drawFrog() {
     textAlign(CENTER, CENTER);
     textSize(frog.body.hand);
     text("🖐", frog.tongue.x, frog.tongue.y); 
-   
     pop();
 
     // Draw the character's body
@@ -278,7 +287,7 @@ function drawFrog() {
     textSize(100);
     ellipse(frog.body.x, frog.body.y, frog.body.size);
     textAlign(CENTER, CENTER);
-    text("🥺", frog.body.x, frog.body.y-100); 
+    text(faceEmoji, frog.body.x, frog.body.y-100); 
     pop();
 }
 
@@ -294,6 +303,7 @@ function checkTongueFlyOverlap() {
         // Reset the cat
         resetFly();
         frog.data.catch += 1;
+        frog.data.mood = "happy"; // 🥰
         console.log("catched:", frog.data.catch);
         // Bring back the arm
         frog.tongue.state = "inbound";
