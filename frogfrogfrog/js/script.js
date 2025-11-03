@@ -18,11 +18,6 @@
 //Our cat variables
 let catFrames = [];
 let frameIndex = 0;  
-const cat = {
-    x:100,
-    y:200,
-    size: 150,
-};
 
 
 // Our frog/ character
@@ -36,7 +31,7 @@ const frog = {
         color: "#13769dff"
     },
     // The character's arm has a position, size, speed, and state
-    tongue: {
+    arm: {
         x: undefined,
         y: 480,
         size: 20,
@@ -58,7 +53,7 @@ let gameUI = "start"; // the gameUI can be: start, game, over
 
 // Our fly/ Cat
 // Has a position, size, and speed of horizontal movement
-const fly = {
+const cat = {
     x: 0,
     y: 200, // Will be random
     size: 30,
@@ -126,10 +121,10 @@ function GameStartUI() {
     drawFrog();
 
     //the UI will change to game UI when triggered
-    if(frog.tongue.y <= height/2){
+    if(frog.arm.y <= height/2){
         gameUI = "game";
-        frog.tongue.state = "idle"; // make the tongue stop moving 
-        frog.tongue.y = height;// set the rongue height to the bottom
+        frog.arm.state = "idle"; // make the tongue stop moving 
+        frog.arm.y = height;// set the rongue height to the bottom
         console.log("game has started")
     }
 }
@@ -143,9 +138,9 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
-    if(frog.data.miss > 2){ 
-        gameUI = "Over";// the game is over if u missed 3 times
-    }
+    // if(frog.data.miss > 2){ 
+    //     gameUI = "Over";// the game is over if u missed 3 times
+    // }
 }
 
 //Our ending scene
@@ -175,9 +170,9 @@ function draw() {
  */
 function moveFly() {
     // Move the cat(originally fly)
-    fly.x += fly.speed;
+    cat.x += cat.speed;
     // Handle the cat going off the canvas
-    if (fly.x > width) {
+    if (cat.x > width) {
         // resetFly();
         gameUI = "Over"//game over when cat ran away
     }
@@ -188,7 +183,7 @@ function moveFly() {
  */
 function drawFly() {
     push();
-    drawCat(fly.x, fly.y, 300, 300);
+    drawCat(cat.x, cat.y, 300, 300);
     catWalk();
     pop();
     push();
@@ -196,8 +191,8 @@ function drawFly() {
     // fill("#000000");
     // ellipse(fly.x, fly.y, fly.size);
     textAlign(CENTER, CENTER);
-    textSize(fly.size);
-    text("💖", fly.x, fly.y); 
+    textSize(cat.size);
+    text("💖", cat.x, cat.y); 
     pop();
 }
 
@@ -205,8 +200,8 @@ function drawFly() {
  * Resets the cat to the left with a random y
  */
 function resetFly() {
-    fly.x = 0;
-    fly.y = random(20, 300);
+    cat.x = 0;
+    cat.y = random(20, 300);
 }
 
 /**
@@ -221,24 +216,27 @@ function moveFrog() {
  */
 function moveTongue() {
     // Tongue (arm) matches the character's x
-    frog.tongue.x = frog.body.x;
+    frog.arm.x = frog.body.x;
     // If the tongue is idle, it doesn't do anything
-    if (frog.tongue.state === "idle") {
+    if (frog.arm.state === "idle") {
         // Do nothing
     }
+
     // If the tongue is outbound, it moves up
-    else if (frog.tongue.state === "outbound") {
-        frog.tongue.y += -frog.tongue.speed;
+    else if (frog.arm.state === "outbound") {
+        frog.arm.y += -frog.arm.speed;
         // The tongue bounces back if it hits the top
-        if (frog.tongue.y <= 0) {
-            frog.tongue.state = "inbound";
+        if (frog.arm.y <= 0) {
+            frog.arm.state = "inbound";
+            frog.data.mood = "sad";
         }
     }
+
     // If the tongue is inbound, it moves down
-    else if (frog.tongue.state === "inbound") {
-        frog.tongue.y += frog.tongue.speed;
+    else if (frog.arm.state === "inbound") {
+        frog.arm.y += frog.arm.speed;
         //if we are in game mode, count the number of tries and misses
-        if(gameUI === "game" && frog.tongue.y === 460){
+        if(gameUI === "game" && frog.arm.y === 460){
         frog.data.tries += 1; // adding a number to tries when the tongue was triggered
         console.log ("number of tries", frog.data.tries);
         frog.data.miss = frog.data.tries - frog.data.catch; // calculating the number missed
@@ -246,9 +244,9 @@ function moveTongue() {
         }
 
         // The tongue stops if it hits the bottom
-        if (frog.tongue.y >= height) {
-            frog.data.mood = "normal";
-            frog.tongue.state = "idle";
+        if (frog.arm.y >= height) {
+            frog.data.mood = "normal";// change the emoji back to idle mode when the arm hits the bottom
+            frog.arm.state = "idle";
         }
     }
 }
@@ -264,20 +262,20 @@ if (frog.data.mood === "normal") {
     faceEmoji = "😭";
 } else if (frog.data.mood === "happy"){
     faceEmoji = "🥰";
-}
+}// change the character emoji with different mood
 
     // Draw the arm (originally the tongue)
     push();
     stroke(frog.body.color);
-    strokeWeight(frog.tongue.size);
-    line(frog.tongue.x, frog.tongue.y, frog.body.x, frog.body.y);
+    strokeWeight(frog.arm.size);
+    line(frog.arm.x, frog.arm.y, frog.body.x, frog.body.y);
     pop();
 
     // Draw the hand on top of the arm
     push();
     textAlign(CENTER, CENTER);
     textSize(frog.body.hand);
-    text("🖐", frog.tongue.x, frog.tongue.y); 
+    text("🖐", frog.arm.x, frog.arm.y); 
     pop();
 
     // Draw the character's body
@@ -296,17 +294,17 @@ if (frog.data.mood === "normal") {
  */
 function checkTongueFlyOverlap() {
     // Get distance from hand to cat
-    const d = dist(frog.tongue.x, frog.tongue.y, fly.x, fly.y);
+    const d = dist(frog.arm.x, frog.arm.y, cat.x, cat.y);
     // Check if it's an overlap
-    const eaten = (d < frog.body.hand / 2 + fly.size / 2);
+    const eaten = (d < frog.body.hand / 2 + cat.size / 2);
     if (eaten) {
         // Reset the cat
         resetFly();
         frog.data.catch += 1;
-        frog.data.mood = "happy"; // 🥰
+        frog.data.mood = "happy"; // change the emoji to 🥰
         console.log("catched:", frog.data.catch);
         // Bring back the arm
-        frog.tongue.state = "inbound";
+        frog.arm.state = "inbound";
     }
 }
 
@@ -314,7 +312,7 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
-    if (frog.tongue.state === "idle") {
-        frog.tongue.state = "outbound";
+    if (frog.arm.state === "idle") {
+        frog.arm.state = "outbound";
     }
 }
