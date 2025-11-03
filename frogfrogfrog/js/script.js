@@ -145,6 +145,16 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+
+    //cat counting text
+    push();
+    textSize(25);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("number of cats caught: " + frog.data.catch, width-width/4, 20);
+    pop();
+
+    //loop the music
     if (!gameMusic.isPlaying()) {
         gameMusic.setVolume(0.3);
         gameMusic.play();
@@ -159,6 +169,7 @@ function gameOverUI() {
     changeMood();
     background("#ebb987ff");
     fill(0);
+
     //show the number of caught cats
     push();
     textSize(30);
@@ -181,12 +192,12 @@ function gameOverUI() {
     ellipse(width - width / 4, frog.body.y - 20, frog.body.size + 30);//body
 
     //draw the text bobble
-        push();
-        noFill(); // makes inside of rect transparent
-        stroke(0);// choose outline color (0 = black)
-        strokeWeight(3);
-        rect(30, height - 220, 340, 140, 20, 20, 0, 20); //长方形的右下角是90度，the right bottom cornor is 90 degrees
-        pop();
+    push();
+    noFill(); // makes inside of rect transparent
+    stroke(0);// choose outline color (0 = black)
+    strokeWeight(3);
+    rect(30, height - 220, 340, 140, 20, 20, 0, 20); //长方形的右下角是90度，the right bottom cornor is 90 degrees
+    pop();
 
     let s = "I wish I could get more cats";
     //draw the character's face 
@@ -200,7 +211,7 @@ function gameOverUI() {
         s = "Hmm… maybe just one more cat?";
         frog.data.mood = "normal";
     }
-    
+
     //the text for the character to speak
     textSize(24);
     text(s, 50, height - 200, 300, 100);
@@ -211,6 +222,12 @@ function gameOverUI() {
     textAlign(CENTER, CENTER);
     text(faceEmoji, width - width / 4, frog.body.y - 130); //face
     pop();
+
+    //looping the music
+    if (!gameMusic.isPlaying()) {
+        gameMusic.setVolume(0.3);
+        gameMusic.play();
+    }
 }
 
 //switching the scenes
@@ -262,10 +279,10 @@ function drawFly() {
 function resetFly() {
     cat.x = 0;
     let newY = random(40, 300);
-  while (abs(newY - cat.y) < 50) { //abs takes the absolute value, the while loop will end when the condition was broken
-    newY = random(40, 300); // pick a new value if newY is too close to the previous cat.y
-  }
-  cat.y = newY;
+    while (abs(newY - cat.y) < 50) { //abs takes the absolute value, the while loop will end when the condition was broken
+        newY = random(40, 300); // pick a new value if newY is too close to the previous cat.y
+    }
+    cat.y = newY;
 }
 
 /**
