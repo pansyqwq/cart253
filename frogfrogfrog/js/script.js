@@ -148,6 +148,7 @@ function gameState() {
 function gameOverUI() {
     changeMood();
     background("#ebb987ff");
+    fill(0);
     //show the number of caught cats
     push();
     textSize(30);
@@ -174,21 +175,28 @@ function gameOverUI() {
         noFill(); // makes inside of rect transparent
         stroke(0);// choose outline color (0 = black)
         strokeWeight(3);
-        rect(30, height - 220, 340, 140, 20, 20, 0, 20);
+        rect(30, height - 220, 340, 140, 20, 20, 0, 20); //长方形的右下角是90度，the right bottom cornor is 90 degrees
         pop();
 
     let s = "I wish I could get more cats";
     //draw the character's face 
     if (frog.data.catch <= 3) {
-        s = "I'm so sad because don't have enough cats";
+        s = "I’m so sad… I need more cats T_T";
         frog.data.mood = "sad";
-        textSize(24);
-        text(s, 50, height - 200, 300, 100);
     } else if (frog.data.catch > 10) {
+        s = "So many cats… This must be heaven!";
         frog.data.mood = "happy";
     } else {
+        s = "Hmm… maybe just one more cat?";
         frog.data.mood = "normal";
     }
+    
+    //the text for the character to speak
+    textSize(24);
+    text(s, 50, height - 200, 300, 100);
+
+    //draw the face emoji
+    push();
     textSize(120);
     textAlign(CENTER, CENTER);
     text(faceEmoji, width - width / 4, frog.body.y - 130); //face
