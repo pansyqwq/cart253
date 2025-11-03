@@ -19,6 +19,7 @@
 let catFrames = [];
 let frameIndex = 0;  
 
+let faceEmoji = "🥺"; // default normal mode for emoji
 
 // Our frog/ character
 const frog = {
@@ -30,6 +31,7 @@ const frog = {
         size: 150,
         color: "#13769dff"
     },
+
     // The character's arm has a position, size, speed, and state
     arm: {
         x: undefined,
@@ -45,7 +47,6 @@ const frog = {
         mood: "normal" // can be: normal, happy, sad, the mood of the character
 
     }
-
 };
 
 let gameUI = "start"; // the gameUI can be: start, game, over
@@ -145,12 +146,33 @@ function gameState() {
 
 //Our ending scene
 function gameOverUI(){
+    changeMood();
     background("#ebb987ff");
+    //show the number of caught cats
+    push();
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("number of cats caught: "+ frog.data.catch, width / 2, height / 3);
+    pop();
+
+    // the game over text
     push();
     textSize(48);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text("Game Over", width / 2, height / 2);
+    text("Game Over", width / 2, height / 5);
+    pop();
+
+    // Draw the character's body
+    push();
+    fill(frog.body.color);
+    ellipse(width -width/3, frog.body.y-20, frog.body.size+30);
+
+    textSize(120);
+    textAlign(CENTER, CENTER);
+    text(faceEmoji, width-width/3, frog.body.y-130); 
+    pop();
 }
 
 //switching the scenes
@@ -251,19 +273,21 @@ function moveTongue() {
     }
 }
 
-/**
- * Displays the tongue (arm) and the frog (character's body)
- */
-function drawFrog() {
-    let faceEmoji = "🥺"; // default normal mode
+function changeMood(){
+    // change the character emoji with different mood
 if (frog.data.mood === "normal") {
     faceEmoji = "🥺";
 } else if (frog.data.mood === "sad") {
     faceEmoji = "😭";
 } else if (frog.data.mood === "happy"){
     faceEmoji = "🥰";
-}// change the character emoji with different mood
-
+}
+}
+/**
+ * Displays the tongue (arm) and the frog (character's body)
+ */
+function drawFrog() {
+    changeMood();
     // Draw the arm (originally the tongue)
     push();
     stroke(frog.body.color);
