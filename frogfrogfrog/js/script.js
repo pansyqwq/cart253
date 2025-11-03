@@ -23,6 +23,7 @@ let faceEmoji = "🥺"; // default normal mode for emoji
 
 let meowSound;// cat meow sound effect
 let gameMusic;// background music of the game
+let restart;// the image for restart button
 
 
 // Our frog/ character
@@ -80,8 +81,10 @@ function preload() {
         catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
         console.log("cat frame was added")
     }// all the frames of the cat
+
     meowSound = loadSound("assets/sounds/Meow1.mp3");
     gameMusic = loadSound("assets/music/game.mp3");
+    restart = loadImage("assets/images/restartButton.png");
 }
 
 function drawCat(x, y, w, h) {
@@ -151,7 +154,7 @@ function gameState() {
     textSize(25);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text("number of cats caught: " + frog.data.catch, width-width/4, 20);
+    text("number of cats caught: " + frog.data.catch, width - width / 4, 20);
     pop();
 
     //loop the music
@@ -228,6 +231,7 @@ function gameOverUI() {
     fill("#f19238ff");
     noStroke();
     rect(20, 20, 50, 50, 10); //rect(x,y,w,h,arc)
+    image(restart, 25, 25, 40, 40);// image of the restart button
     pop();
 
     //looping the music
@@ -405,7 +409,18 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
+     if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
+        gameUI = "game";   // restart the game
+        resetFly();        // optional: reset cat position
+        frog.data.catch = 0;
+        frog.data.tries = 0;
+        frog.data.miss = 0;
+        frog.data.mood = "normal";
+
+        return; // need to do this so when I click reset button, it doesn't also trigger the arm
+    }
+
     if (frog.arm.state === "idle") {
-        frog.arm.state = "outbound";
+        frog.arm.state = "outbound";// trigger the arm to go up
     }
 }
