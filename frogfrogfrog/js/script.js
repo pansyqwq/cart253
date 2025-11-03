@@ -247,7 +247,7 @@ function moveTongue() {
 
         // The tongue stops if it hits the bottom
         if (frog.tongue.y >= height) {
-            // data.mood = "normal";
+            frog.data.mood = "normal";
             frog.tongue.state = "idle";
         }
     }
