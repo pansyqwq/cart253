@@ -261,7 +261,11 @@ function drawFly() {
  */
 function resetFly() {
     cat.x = 0;
-    cat.y = random(20, 300);
+    let newY = random(40, 300);
+  while (abs(newY - cat.y) < 50) { //abs takes the absolute value, the while loop will end when the condition was broken
+    newY = random(40, 300); // pick a new value if newY is too close to the previous cat.y
+  }
+  cat.y = newY;
 }
 
 /**
