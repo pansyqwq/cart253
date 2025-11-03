@@ -15,11 +15,15 @@
 
 "use strict";
 
-//Our cat variables
+//Our cat variables, for animations
 let catFrames = [];
 let frameIndex = 0;
 
 let faceEmoji = "🥺"; // default normal mode for emoji
+
+let meowSound;// cat meow sound effect
+let gameMusic;// background music of the game
+
 
 // Our frog/ character
 const frog = {
@@ -58,7 +62,7 @@ const cat = {
     x: 0,
     y: 200, // Will be random
     size: 30,
-    speed: 3
+    speed: 6
 };
 
 /**
@@ -75,7 +79,9 @@ function preload() {
     for (let i = 0; i < 4; i++) {
         catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
         console.log("cat frame was added")
-    }
+    }// all the frames of the cat
+    meowSound = loadSound("assets/sounds/Meow1.mp3");
+    gameMusic = loadSound("assets/music/game.mp3");
 }
 
 function drawCat(x, y, w, h) {
@@ -139,6 +145,10 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    if (!gameMusic.isPlaying()) {
+        gameMusic.setVolume(0.3);
+        gameMusic.play();
+    }
     // if(frog.data.miss > 2){ 
     //     gameUI = "Over";// the game is over if u missed 3 times
     // }
@@ -357,6 +367,9 @@ function checkTongueFlyOverlap() {
         console.log("catched:", frog.data.catch);
         // Bring back the arm
         frog.arm.state = "inbound";
+        //let the cat meow
+        meowSound.setVolume(0.3); // volume goes between 0.0 and 1.0
+        meowSound.play();
     }
 }
 
