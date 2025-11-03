@@ -17,7 +17,7 @@
 
 //Our cat variables
 let catFrames = [];
-let frameIndex = 0;  
+let frameIndex = 0;
 
 let faceEmoji = "🥺"; // default normal mode for emoji
 
@@ -41,8 +41,8 @@ const frog = {
         state: "idle" // State can be: idle, outbound, inbound
     },
     data: {
-        catch:0, // The number of catches
-        tries:0, // The total attemps
+        catch: 0, // The number of catches
+        tries: 0, // The total attemps
         miss: 0, // The number of times the person has missed
         mood: "normal" // can be: normal, happy, sad, the mood of the character
 
@@ -71,24 +71,24 @@ function setup() {
 }
 
 //preload the images
-function preload(){
+function preload() {
     for (let i = 0; i < 4; i++) {
-    catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
-    console.log("cat frame was added")
-  }
+        catFrames[i] = loadImage(`assets/images/Walk${i}.png`);
+        console.log("cat frame was added")
+    }
 }
 
-function drawCat(x,y,w,h){
+function drawCat(x, y, w, h) {
     imageMode(CENTER); // draw from the center instead of top-left
     image(catFrames[frameIndex], x, y, w, h);
     // console.log("there is an image",Image);
 }
 
-function catWalk(){
+function catWalk() {
     if (frameCount % 15 === 0) {
-    frameIndex = (frameIndex + 1) % catFrames.length;
-  }
-//   console.log("the cat is walking")
+        frameIndex = (frameIndex + 1) % catFrames.length;
+    }
+    //   console.log("the cat is walking")
 }
 
 //Our Starting Scene 
@@ -97,7 +97,7 @@ function GameStartUI() {
     //setting up background and instruction texts
     push();
     background("#67d39fff");
-    drawCat(320,240,400,400);
+    drawCat(320, 240, 400, 400);
     catWalk();// cat idel animation
 
     textSize(20);
@@ -122,7 +122,7 @@ function GameStartUI() {
     drawFrog();
 
     //the UI will change to game UI when triggered
-    if(frog.arm.y <= height/2){
+    if (frog.arm.y <= height / 2) {
         gameUI = "game";
         frog.arm.state = "idle"; // make the tongue stop moving 
         frog.arm.y = height;// set the rongue height to the bottom
@@ -145,7 +145,7 @@ function gameState() {
 }
 
 //Our ending scene
-function gameOverUI(){
+function gameOverUI() {
     changeMood();
     background("#ebb987ff");
     //show the number of caught cats
@@ -153,7 +153,7 @@ function gameOverUI(){
     textSize(30);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text("number of cats caught: "+ frog.data.catch, width / 2, height / 3);
+    text("number of cats caught: " + frog.data.catch, width / 2, height / 3);
     pop();
 
     // the game over text
@@ -167,11 +167,31 @@ function gameOverUI(){
     // Draw the character's body
     push();
     fill(frog.body.color);
-    ellipse(width -width/3, frog.body.y-20, frog.body.size+30);
+    ellipse(width - width / 4, frog.body.y - 20, frog.body.size + 30);//body
 
+    //draw the text bobble
+        push();
+        noFill(); // makes inside of rect transparent
+        stroke(0);// choose outline color (0 = black)
+        strokeWeight(3);
+        rect(30, height - 220, 340, 140, 20, 20, 0, 20);
+        pop();
+
+    let s = "I wish I could get more cats";
+    //draw the character's face 
+    if (frog.data.catch <= 3) {
+        s = "I'm so sad because don't have enough cats";
+        frog.data.mood = "sad";
+        textSize(24);
+        text(s, 50, height - 200, 300, 100);
+    } else if (frog.data.catch > 10) {
+        frog.data.mood = "happy";
+    } else {
+        frog.data.mood = "normal";
+    }
     textSize(120);
     textAlign(CENTER, CENTER);
-    text(faceEmoji, width-width/3, frog.body.y-130); 
+    text(faceEmoji, width - width / 4, frog.body.y - 130); //face
     pop();
 }
 
@@ -181,7 +201,7 @@ function draw() {
         GameStartUI();
     } else if (gameUI === "game") {
         gameState();
-    } else if (gameUI === "Over"){
+    } else if (gameUI === "Over") {
         gameOverUI();
     }
 }
@@ -214,7 +234,7 @@ function drawFly() {
     // ellipse(fly.x, fly.y, fly.size);
     textAlign(CENTER, CENTER);
     textSize(cat.size);
-    text("💖", cat.x, cat.y); 
+    text("💖", cat.x, cat.y);
     pop();
 }
 
@@ -258,11 +278,11 @@ function moveTongue() {
     else if (frog.arm.state === "inbound") {
         frog.arm.y += frog.arm.speed;
         //if we are in game mode, count the number of tries and misses
-        if(gameUI === "game" && frog.arm.y === 460){
-        frog.data.tries += 1; // adding a number to tries when the tongue was triggered
-        console.log ("number of tries", frog.data.tries);
-        frog.data.miss = frog.data.tries - frog.data.catch; // calculating the number missed
-        console.log ("number of miss", frog.data.miss);
+        if (gameUI === "game" && frog.arm.y === 460) {
+            frog.data.tries += 1; // adding a number to tries when the tongue was triggered
+            console.log("number of tries", frog.data.tries);
+            frog.data.miss = frog.data.tries - frog.data.catch; // calculating the number missed
+            console.log("number of miss", frog.data.miss);
         }
 
         // The tongue stops if it hits the bottom
@@ -273,15 +293,15 @@ function moveTongue() {
     }
 }
 
-function changeMood(){
+function changeMood() {
     // change the character emoji with different mood
-if (frog.data.mood === "normal") {
-    faceEmoji = "🥺";
-} else if (frog.data.mood === "sad") {
-    faceEmoji = "😭";
-} else if (frog.data.mood === "happy"){
-    faceEmoji = "🥰";
-}
+    if (frog.data.mood === "normal") {
+        faceEmoji = "🥺";
+    } else if (frog.data.mood === "sad") {
+        faceEmoji = "😭";
+    } else if (frog.data.mood === "happy") {
+        faceEmoji = "🥰";
+    }
 }
 /**
  * Displays the tongue (arm) and the frog (character's body)
@@ -299,7 +319,7 @@ function drawFrog() {
     push();
     textAlign(CENTER, CENTER);
     textSize(frog.body.hand);
-    text("🖐", frog.arm.x, frog.arm.y); 
+    text("🖐", frog.arm.x, frog.arm.y);
     pop();
 
     // Draw the character's body
@@ -309,7 +329,7 @@ function drawFrog() {
     textSize(100);
     ellipse(frog.body.x, frog.body.y, frog.body.size);
     textAlign(CENTER, CENTER);
-    text(faceEmoji, frog.body.x, frog.body.y-100); 
+    text(faceEmoji, frog.body.x, frog.body.y - 100);
     pop();
 }
 
