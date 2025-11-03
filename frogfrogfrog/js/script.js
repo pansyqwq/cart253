@@ -223,6 +223,13 @@ function gameOverUI() {
     text(faceEmoji, width - width / 4, frog.body.y - 130); //face
     pop();
 
+    //the reset button
+    push();
+    fill("#f19238ff");
+    noStroke();
+    rect(20, 20, 50, 50, 10); //rect(x,y,w,h,arc)
+    pop();
+
     //looping the music
     if (!gameMusic.isPlaying()) {
         gameMusic.setVolume(0.3);
