@@ -207,10 +207,13 @@ function gameOverUI() {
     if (frog.data.catch <= 3) {
         s = "I’m so sad… I need more cats T_T";
         frog.data.mood = "sad";
-    } else if (frog.data.catch > 10) {
+    } else if (frog.data.catch > 10 && frog.data.catch < 50) {
         s = "So many cats… This must be heaven!";
         frog.data.mood = "happy";
-    } else {
+    } else if(frog.data.catch >= 50){
+        s = "this is CAT PARADISE!!!";
+        frog.data.mood = "bravo";
+    }else {
         s = "Hmm… maybe just one more cat?";
         frog.data.mood = "normal";
     }
@@ -263,6 +266,7 @@ function moveFly() {
     if (cat.x > width) {
         // resetFly();
         gameUI = "Over"//game over when cat ran away
+        // frog.data.catch += 50;//used for testing the bravo ending scene
     }
 }
 
@@ -275,9 +279,7 @@ function drawFly() {
     catWalk();
     pop();
     push();
-    // noStroke();
-    // fill("#000000");
-    // ellipse(fly.x, fly.y, fly.size);
+
     textAlign(CENTER, CENTER);
     textSize(cat.size);
     text("💖", cat.x, cat.y);
@@ -351,6 +353,8 @@ function changeMood() {
         faceEmoji = "😭";
     } else if (frog.data.mood === "happy") {
         faceEmoji = "🥰";
+    } else if (frog.data.mood === "bravo"){
+        faceEmoji = "🥳";
     }
 }
 /**
