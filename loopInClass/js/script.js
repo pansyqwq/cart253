@@ -43,4 +43,12 @@ function draw() {
         fill(255,0,0);
         rect(x, y, rectWidth);
     }
+
+    let y = 50;
+    for(let i=0; i<=10; i++){
+        fill(255,0,0);
+        rect(x, y*i, rectWidth);
+        fill(0,0,0);
+        text(i,x,y*i);
+    }
 }
