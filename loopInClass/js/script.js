@@ -52,14 +52,19 @@ function draw() {
     //     fill(0,0,0);
     //     text(i,x,y*i);
     // }
-    let startColor = color("#ff0000");//0%
-    let endColor = color("#0099ffff");//100%
-    for(let i = 0; i<10; i++){
-        let percent = i/10;
-        let c = lerpColor(startColor, endColor,percent);
-           fill(c);
-        rect (50*i,10,50);
-    }
+
+    // let startColor = color("#ff0000");//0%
+    // let endColor = color("#0099ffff");//100%
+    // for(let i = 0; i<10; i++){
+    //     let percent = i/10;
+    //     let c = lerpColor(startColor, endColor,percent);
+    //        fill(c);
+    //     rect (50*i,10,50);
+    // }
     
- 
+    for (let i=0; i<20; i++){
+        for(let j=0; j<5; j++){
+            console.log(i,j);
+        }
+    }
 }
