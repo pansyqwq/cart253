@@ -39,16 +39,27 @@ function draw() {
     //     console.log(i);
     // }
 
-    for(let y =0; y<height; y = y+ rectWidth){
-        fill(255,0,0);
-        rect(x, y, rectWidth);
-    }
+    // for(let y =0; y<height; y = y+ rectWidth){
+    //     fill(255,0,0);
+    //     rect(x, y, rectWidth);
+    // }
 
-    let y = 50;
-    for(let i=0; i<=10; i++){
-        fill(255,0,0);
-        rect(x, y*i, rectWidth);
-        fill(0,0,0);
-        text(i,x,y*i);
+    // let y = 50;
+    // for(let i=0; i<=10; i++){
+    //     // fill(255,0,0);
+    //     fill(i*20);
+    //     rect(x, y*i, rectWidth);
+    //     fill(0,0,0);
+    //     text(i,x,y*i);
+    // }
+    let startColor = color("#ff0000");//0%
+    let endColor = color("#0099ffff");//100%
+    for(let i = 0; i<10; i++){
+        let percent = i/10;
+        let c = lerpColor(startColor, endColor,percent);
+           fill(c);
+        rect (50*i,10,50);
     }
+    
+ 
 }
