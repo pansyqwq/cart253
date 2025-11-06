@@ -25,12 +25,12 @@ function draw() {
 
     let x = 0;
     let y = 0;
-    let c = 0;
+    let c = 0;//for the stroke weight
     let startColor = color("#0a06ffff");//0%
     let endColor = color("#00ffe1ff");//100%
-    for (let j = 0; j < 10; j++) {
-        for (let i = 0; i < 10; i++) {
-            let percent = i / 10;
+    for (let j = 0; j < 10; j++) { // loop for the coordinates of the y axis
+        for (let i = 0; i < 10; i++) {//loop for the coordinates of the x axis
+            let percent = i / 10;// percentage for the gradient color
             let c = lerpColor(startColor, endColor, percent);
             fill(c);
             rect(50 * i, 50*j, 50);
