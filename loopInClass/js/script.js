@@ -53,37 +53,37 @@ function draw() {
     //     text(i,x,y*i);
     // }
 
-    // let startColor = color("#ff0000");//0%
-    // let endColor = color("#0099ffff");//100%
-    // for(let i = 0; i<10; i++){
-    //     let percent = i/10;
-    //     let c = lerpColor(startColor, endColor,percent);
-    //        fill(c);
-    //     rect (50*i,10,50);
-    // }
+    let startColor = color("#ff0000");//0%
+    let endColor = color("#0099ffff");//100%
+    for(let i = 0; i<10; i++){
+        let percent = i/10;
+        let c = lerpColor(startColor, endColor,percent);
+           fill(c);
+        rect (50*i,10,50);
+    }
     
-    // for (let i=0; i<20; i++){
-    //     for(let j=0; j<5; j++){
-    //         console.log(i,j);
-    //     }
-    // }
-
-    const CELL_SIZE = 20;
-    const NUM_COLS = 500/CELL_SIZE;// 500 is the width
-    const NUm_ROWS = 500/CELL_SIZE;
-
-    rectMode(CORNER);
-    // for (let x=0; x<NUM_COLS; x++){
-    //     fill("#ff0000");
-    //     rect(CELL_SIZE*x,0,CELL_SIZE);
-    // }
-       for (let y=0; y<NUm_ROWS; y++){
-        fill("#ff0000");
-        // rect(0,CELL_SIZE*y,CELL_SIZE);
-        for(x=0; x<NUM_COLS; x++){
-            rect(CELL_SIZE*x,CELL_SIZE*y,CELL_SIZE);
+    for (let i=0; i<20; i++){
+        for(let j=0; j<5; j++){
+            console.log(i,j);
         }
     }
+
+    // const CELL_SIZE = 20;
+    // const NUM_COLS = 500/CELL_SIZE;// 500 is the width
+    // const NUm_ROWS = 500/CELL_SIZE;
+
+    // rectMode(CORNER);
+    // // for (let x=0; x<NUM_COLS; x++){
+    // //     fill("#ff0000");
+    // //     rect(CELL_SIZE*x,0,CELL_SIZE);
+    // // }
+    //    for (let y=0; y<NUm_ROWS; y++){
+    //     fill("#ff0000");
+    //     // rect(0,CELL_SIZE*y,CELL_SIZE);
+    //     for(x=0; x<NUM_COLS; x++){
+    //         rect(CELL_SIZE*x,CELL_SIZE*y,CELL_SIZE);
+    //     }
+    // }
     // noLoop();
     // let shrooksArray = [30,70,50,60,45,23]
 
