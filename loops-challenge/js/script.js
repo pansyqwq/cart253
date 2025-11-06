@@ -26,7 +26,6 @@ function draw() {
     let x = 0;
     let y = 0;
     let c = 0;
-    let b = 0;
     let startColor = color("#0a06ffff");//0%
     let endColor = color("#00ffe1ff");//100%
     for (let j = 0; j < 10; j++) {
@@ -44,39 +43,11 @@ function draw() {
         x += 50;
     }
     while (y < height) {
-        stroke(b);
+        c = 0;
         line(0, y, width, y);
         b += 50;
         y += 50;
     }
-
-   
-
-
-
-
-    // const CELL_SIZE = 50;
-    // const NUM_COLS = height / CELL_SIZE;// 500 is the width
-    // const NUm_ROWS = width / CELL_SIZE;
-
-    // rectMode(CORNER);
-    // // for (let x=0; x<NUM_COLS; x++){
-    // //     fill("#ff0000");
-    // //     rect(CELL_SIZE*x,0,CELL_SIZE);
-    // // }
-    // for (let y = 0; y < NUm_ROWS; y++) {
-    //     fill("#ff0000");
-    //     // rect(0,CELL_SIZE*y,CELL_SIZE);
-    //     for (x = 0; x < NUM_COLS; x++) {
-    //         rect(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE);
-    //     }
-    // }
-
-// for(let i=0; i<=250; i=i+25){
-//     for(let j=0; j<=500; j=j+50){
-//          stroke(i);
-//          line(j, 0, j, height);
-//     }
 }
 
 
