@@ -68,26 +68,26 @@ function draw() {
     //     }
     // }
 
-    // const CELL_SIZE = 20;
-    // const NUM_COLS = 500/CELL_SIZE;// 500 is the width
-    // const NUm_ROWS = 500/CELL_SIZE;
+    const CELL_SIZE = 20;
+    const NUM_COLS = 500/CELL_SIZE;// 500 is the width
+    const NUm_ROWS = 500/CELL_SIZE;
 
-    // rectMode(CORNER);
-    // // for (let x=0; x<NUM_COLS; x++){
-    // //     fill("#ff0000");
-    // //     rect(CELL_SIZE*x,0,CELL_SIZE);
-    // // }
-    //    for (let y=0; y<NUm_ROWS; y++){
+    rectMode(CORNER);
+    // for (let x=0; x<NUM_COLS; x++){
     //     fill("#ff0000");
-    //     // rect(0,CELL_SIZE*y,CELL_SIZE);
-    //     for(x=0; x<NUM_COLS; x++){
-    //         rect(CELL_SIZE*x,CELL_SIZE*y,CELL_SIZE);
-    //     }
+    //     rect(CELL_SIZE*x,0,CELL_SIZE);
     // }
-    noLoop();
-    let shrooksArray = [30,70,50,60,45,23]
-
-    for(let i=shrooksArray.length-1; i>=0; i--){
-        console.log(shrooksArray[i]);
+       for (let y=0; y<NUm_ROWS; y++){
+        fill("#ff0000");
+        // rect(0,CELL_SIZE*y,CELL_SIZE);
+        for(x=0; x<NUM_COLS; x++){
+            rect(CELL_SIZE*x,CELL_SIZE*y,CELL_SIZE);
+        }
     }
+    // noLoop();
+    // let shrooksArray = [30,70,50,60,45,23]
+
+    // for(let i=shrooksArray.length-1; i>=0; i--){
+    //     console.log(shrooksArray[i]);
+    // }
 }
