@@ -27,8 +27,8 @@ function draw() {
     let y = 0;
     let c = 0;
     let b = 0;
-    let startColor = color("#ff0000");//0%
-    let endColor = color("#0099ffff");//100%
+    let startColor = color("#0a06ffff");//0%
+    let endColor = color("#00ffe1ff");//100%
     for (let j = 0; j < 10; j++) {
         for (let i = 0; i < 10; i++) {
             let percent = i / 10;
