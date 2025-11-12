@@ -11,4 +11,11 @@ function setup() {
 
 function draw() {
     background(0);
+    for(let i =0; i< NUM_COLS; i++){
+        for(let j = 0; j < NUM_ROWS; j++){
+            fill("#FF0000");
+            rectMode(CORNER);
+            rect(i*CELL_SIZE,j*CELL_SIZE, CELL_SIZE, CELL_SIZE)
+        }
+    }
 }
