@@ -11,11 +11,19 @@ function setup() {
 
 function draw() {
     background(0);
-    for(let i =0; i< NUM_COLS; i++){
-        for(let j = 0; j < NUM_ROWS; j++){
-            fill("#FF0000");
-            rectMode(CORNER);
-            rect(i*CELL_SIZE,j*CELL_SIZE, CELL_SIZE, CELL_SIZE)
+    drawMaze();
+}
+
+function drawMaze() {
+    for (let i = 0; i < NUM_COLS; i++) {
+        for (let j = 0; j < NUM_ROWS; j++) {
+            drawCell(i,j);// call i and j here
         }
     }
+}
+
+function drawCell(x,y) {
+    fill("#FF0000");
+    rectMode(CORNER);
+    rect(x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
 }
