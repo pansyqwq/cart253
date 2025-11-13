@@ -1,6 +1,6 @@
 /**
- * Terrible New Car
- * Pippin Barr
+ * data challenge
+ * Ziyan Pan & Weini Wang
  * 
  * A program to generate new car model names using dinosaurs.
  * 
