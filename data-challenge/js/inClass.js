@@ -3,10 +3,18 @@ const CELL_SIZE = 125;
 const NUM_COLS = 4;
 const NUM_ROWS = 4;
 let currentMaze = null;
+let jsonDATA;
 
-
+function preload(){
+    jsonDATA = loadJSON("assets/data/mazeClass.json");
+    console.log(jsonDATA);
+}
 function setup() {
     createCanvas(500, 500);
+
+    //get first maze
+    currentMaze = jsonDATA.mazes[0]
+    console.log(currentMaze);
 }
 
 function draw() {
@@ -17,7 +25,9 @@ function draw() {
 function drawMaze() {
     for (let i = 0; i < NUM_COLS; i++) {
         for (let j = 0; j < NUM_ROWS; j++) {
+            if(currentMaze[i][j] ===1){
             drawCell(i,j);// call i and j here
+            }
         }
     }
 }
