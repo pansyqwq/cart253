@@ -210,10 +210,10 @@ function gameOverUI() {
     } else if (frog.data.catch > 10 && frog.data.catch < 50) {
         s = "So many cats… This must be heaven!";
         frog.data.mood = "happy";
-    } else if(frog.data.catch >= 50){
+    } else if (frog.data.catch >= 50) {
         s = "this is CAT PARADISE!!!";
         frog.data.mood = "bravo";
-    }else {
+    } else {
         s = "Hmm… maybe just one more cat?";
         frog.data.mood = "normal";
     }
@@ -242,6 +242,30 @@ function gameOverUI() {
         gameMusic.setVolume(0.3);
         gameMusic.play();
     }
+
+    //the continue to the next level button
+    push();
+    let label = "Go to the next level?";
+    let tw = textWidth(label);
+
+    // let rectW = tw + padding * 2;
+    let rectH = 40;
+
+    let cx = width / 2;
+    let cy = height / 2 - 25;
+
+    fill("#f19238ff");
+    noStroke();
+    rectMode(CENTER);
+    rect(cx, cy, tw, rectH, 10); //rect(x,y,w,h,arc)
+
+    //text to the next level
+    fill(0);
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    text(label, cx, cy);
+    console.log("the next scene text was activated");
+    pop();
 }
 
 //switching the scenes
@@ -353,7 +377,7 @@ function changeMood() {
         faceEmoji = "😭";
     } else if (frog.data.mood === "happy") {
         faceEmoji = "🥰";
-    } else if (frog.data.mood === "bravo"){
+    } else if (frog.data.mood === "bravo") {
         faceEmoji = "🥳";
     }
 }
@@ -413,7 +437,7 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
-     if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
+    if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
         gameUI = "game";   // restart the game
         resetFly();        // optional: reset cat position
         frog.data.catch = 0;
@@ -423,7 +447,6 @@ function mousePressed() {
 
         return; // need to do this so when I click reset button, it doesn't also trigger the arm
     }
-
     if (frog.arm.state === "idle") {
         frog.arm.state = "outbound";// trigger the arm to go up
     }
