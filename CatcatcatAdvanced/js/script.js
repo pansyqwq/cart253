@@ -17,6 +17,7 @@
 
 //Our cat variables, for animations
 let catFrames = [];
+let gingerFrames = [];
 let frameIndex = 0;
 
 let faceEmoji = "🥺"; // default normal mode for emoji
@@ -82,6 +83,11 @@ function preload() {
         console.log("cat frame was added")
     }// all the frames of the cat
 
+    for (let i = 0; i < 4; i++) {
+        gingerFrames[i] = loadImage(`assets/images/ginger${i}.png`);
+        console.log("cat2 frame was added")
+    }// all the frames of the cat2
+
     meowSound = loadSound("assets/sounds/Meow1.mp3");
     gameMusic = loadSound("assets/music/game.mp3");
     restart = loadImage("assets/images/restartButton.png");
@@ -90,6 +96,12 @@ function preload() {
 function drawCat(x, y, w, h) {
     imageMode(CENTER); // draw from the center instead of top-left
     image(catFrames[frameIndex], x, y, w, h);
+    // console.log("there is an image",Image);
+}
+
+function drawCat2(x, y, w, h) {
+    imageMode(CENTER); // draw from the center instead of top-left
+    image(gingerFrames[frameIndex], x, y, w, h);
     // console.log("there is an image",Image);
 }
 
@@ -267,8 +279,15 @@ function gameOverUI() {
     pop();
 }
 
-function level2UI(){
-    
+function newCat2() {
+    push();
+    background("#b1a6ebff");
+    drawCat2(320, 240, 400, 400);
+    catWalk();// cat idel animation
+    pop();
+}
+function level2UI() {
+
 }
 
 //switching the scenes
@@ -279,7 +298,9 @@ function draw() {
         gameState();
     } else if (gameUI === "Over") {
         gameOverUI();
-    } else if (gameUI === "level2"){
+    } else if (gameUI === "cat2") {
+        newCat2();
+    } else if (gameUI === "level2") {
         level2UI();
     }
 }
@@ -444,16 +465,17 @@ function checkTongueFlyOverlap() {
 function mousePressed() {
     if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
         gameUI = "game";   // restart the game
-        resetFly();        // optional: reset cat position
+        resetFly();        //reset cat position
         frog.data.catch = 0;
         frog.data.tries = 0;
         frog.data.miss = 0;
         frog.data.mood = "normal";
 
         return; // need to do this so when I click reset button, it doesn't also trigger the arm
-    } else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over"){
-         gameUI = "level2";   // restart the game
-        resetFly();        // optional: reset cat position
+    }
+    else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over") {
+        gameUI = "cat2";   // introducing cat2
+        resetFly();        // reset cat position
         frog.data.catch = 0;
         frog.data.tries = 0;
         frog.data.miss = 0;
