@@ -246,9 +246,8 @@ function gameOverUI() {
     //the continue to the next level button
     push();
     let label = "Go to the next level?";
-    let tw = textWidth(label);
 
-    // let rectW = tw + padding * 2;
+    let rectW = 200
     let rectH = 40;
 
     let cx = width / 2;
@@ -257,7 +256,7 @@ function gameOverUI() {
     fill("#f19238ff");
     noStroke();
     rectMode(CENTER);
-    rect(cx, cy, tw, rectH, 10); //rect(x,y,w,h,arc)
+    rect(cx, cy, 200, rectH, 10); //rect(x,y,w,h,arc)
 
     //text to the next level
     fill(0);
@@ -268,6 +267,10 @@ function gameOverUI() {
     pop();
 }
 
+function level2UI(){
+    
+}
+
 //switching the scenes
 function draw() {
     if (gameUI === "start") {
@@ -276,6 +279,8 @@ function draw() {
         gameState();
     } else if (gameUI === "Over") {
         gameOverUI();
+    } else if (gameUI === "level2"){
+        level2UI();
     }
 }
 
@@ -446,7 +451,15 @@ function mousePressed() {
         frog.data.mood = "normal";
 
         return; // need to do this so when I click reset button, it doesn't also trigger the arm
+    } else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over"){
+         gameUI = "level2";   // restart the game
+        resetFly();        // optional: reset cat position
+        frog.data.catch = 0;
+        frog.data.tries = 0;
+        frog.data.miss = 0;
+        frog.data.mood = "normal";
     }
+
     if (frog.arm.state === "idle") {
         frog.arm.state = "outbound";// trigger the arm to go up
     }
