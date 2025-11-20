@@ -14,6 +14,7 @@
  */
 
 "use strict";
+let mouseActive = false;
 
 //Our cat variables, for animations
 let catFrames = [];
@@ -285,9 +286,33 @@ function newCat2() {
     drawCat2(320, 240, 400, 400);
     catWalk();// cat idel animation
     pop();
+
+    //text of starting the game 
+    push();
+    textSize(48);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("NEW CAT ADDED", width / 2, height / 8);
+    console.log("instruction scene");
+    pop();
+
+    //the characteris placed, and the arm will stick out when pressed
+    moveTongue();
+    moveFrog()
+    drawFrog();
+
+    //the UI will change to game UI when triggered
+    if (frog.arm.y <= height / 2) {
+        gameUI = "level2";
+        frog.arm.state = "idle"; // make the tongue stop moving 
+        frog.arm.y = height;// set the rongue height to the bottom
+        console.log("level2 has started")
+    }
 }
 function level2UI() {
-
+    push();
+    background("#eba6cdff");
+    pop();
 }
 
 //switching the scenes
@@ -352,7 +377,12 @@ function resetFly() {
  * Moves the character to the mouse position on x
  */
 function moveFrog() {
-    frog.body.x = mouseX;
+    if (gameUI === "start" || gameUI === "cat2"){
+        frog.body.x = width/2;
+    } else {
+        frog.body.x = mouseX;
+    }
+    
 }
 
 /**
@@ -363,6 +393,7 @@ function moveTongue() {
     frog.arm.x = frog.body.x;
     // If the tongue is idle, it doesn't do anything
     if (frog.arm.state === "idle") {
+        frog.arm.y = height;
         // Do nothing
     }
 
@@ -463,26 +494,48 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
+    if (mouseActive === false){
     if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
         gameUI = "game";   // restart the game
         resetFly();        //reset cat position
+
+        frog.arm.state = "idle";
+
         frog.data.catch = 0;
         frog.data.tries = 0;
         frog.data.miss = 0;
         frog.data.mood = "normal";
+
+        mouseActive = true;
+        setTimeout(function(){
+            mouseActive = false
+        }, 200)
 
         return; // need to do this so when I click reset button, it doesn't also trigger the arm
     }
     else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over") {
         gameUI = "cat2";   // introducing cat2
         resetFly();        // reset cat position
+
+        frog.arm.state = "idle";
+
         frog.data.catch = 0;
         frog.data.tries = 0;
         frog.data.miss = 0;
         frog.data.mood = "normal";
+
+        mouseActive = true;
+          setTimeout(function(){
+            mouseActive = false
+        }, 200) // u can only press the mouse again after 0.2 sec
+
+        return; 
     }
 
     if (frog.arm.state === "idle") {
         frog.arm.state = "outbound";// trigger the arm to go up
     }
+     }
+
+   
 }
