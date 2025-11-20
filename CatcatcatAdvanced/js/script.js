@@ -27,6 +27,8 @@ let meowSound;// cat meow sound effect
 let gameMusic;// background music of the game
 let restart;// the image for restart button
 
+let catType = 1; // the type of cat, the first cat will be 1
+
 
 // Our frog/ character
 const frog = {
@@ -101,9 +103,13 @@ function drawCat(x, y, w, h) {
 }
 
 function drawCat2(x, y, w, h) {
+    push();
     imageMode(CENTER); // draw from the center instead of top-left
-    image(gingerFrames[frameIndex], x, y, w, h);
-    // console.log("there is an image",Image);
+    translate (x,y); // translate the 0,0 to the position of x and y
+    scale(-1, 1); //scale applies to the entire image
+    image(gingerFrames[frameIndex], 0, 0, w, h);
+    console.log("there is an image",Image);
+    pop();
 }
 
 function catWalk() {
@@ -170,11 +176,7 @@ function gameState() {
     text("number of cats caught: " + frog.data.catch, width - width / 4, 20);
     pop();
 
-    //loop the music
-    if (!gameMusic.isPlaying()) {
-        gameMusic.setVolume(0.3);
-        gameMusic.play();
-    }
+    music();
     // if(frog.data.miss > 2){ 
     //     gameUI = "Over";// the game is over if u missed 3 times
     // }
@@ -183,6 +185,7 @@ function gameState() {
 //Our ending scene
 function gameOverUI() {
     changeMood();
+    music();
     background("#ebb987ff");
     fill(0);
 
@@ -250,11 +253,6 @@ function gameOverUI() {
     image(restart, 25, 25, 40, 40);// image of the restart button
     pop();
 
-    //looping the music
-    if (!gameMusic.isPlaying()) {
-        gameMusic.setVolume(0.3);
-        gameMusic.play();
-    }
 
     //the continue to the next level button
     push();
@@ -292,7 +290,7 @@ function newCat2() {
     textSize(48);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text("NEW CAT ADDED", width / 2, height / 8);
+    text("NEW CAT ADDED!!!", width / 2, height / 8);
     console.log("instruction scene");
     pop();
 
@@ -300,6 +298,7 @@ function newCat2() {
     moveTongue();
     moveFrog()
     drawFrog();
+    music();
 
     //the UI will change to game UI when triggered
     if (frog.arm.y <= height / 2) {
@@ -313,6 +312,31 @@ function level2UI() {
     push();
     background("#eba6cdff");
     pop();
+
+    moveFly();
+    drawFly();
+    moveFrog();
+    moveTongue();
+    drawFrog();
+    checkTongueFlyOverlap();
+
+    //cat counting text
+    push();
+    textSize(25);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("number of cats caught: " + frog.data.catch, width - width / 4, 20);
+    pop();
+
+    music();
+}
+
+function music() {
+    //loop the music
+    if (!gameMusic.isPlaying()) {
+        gameMusic.setVolume(0.3);
+        gameMusic.play();
+    }
 }
 
 //switching the scenes
@@ -349,6 +373,7 @@ function moveFly() {
  * draw the cat and the heart of the cat
  */
 function drawFly() {
+
     push();
     drawCat(cat.x, cat.y, 300, 300);
     catWalk();
@@ -377,12 +402,12 @@ function resetFly() {
  * Moves the character to the mouse position on x
  */
 function moveFrog() {
-    if (gameUI === "start" || gameUI === "cat2"){
-        frog.body.x = width/2;
+    if (gameUI === "start" || gameUI === "cat2") {
+        frog.body.x = width / 2;
     } else {
         frog.body.x = mouseX;
     }
-    
+
 }
 
 /**
@@ -494,48 +519,48 @@ function checkTongueFlyOverlap() {
  * Launch the tongue on click (if it's not launched yet)
  */
 function mousePressed() {
-    if (mouseActive === false){
-    if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
-        gameUI = "game";   // restart the game
-        resetFly();        //reset cat position
+    if (mouseActive === false) {
+        if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
+            gameUI = "game";   // restart the game
+            resetFly();        //reset cat position
 
-        frog.arm.state = "idle";
+            frog.arm.state = "idle";
 
-        frog.data.catch = 0;
-        frog.data.tries = 0;
-        frog.data.miss = 0;
-        frog.data.mood = "normal";
+            frog.data.catch = 0;
+            frog.data.tries = 0;
+            frog.data.miss = 0;
+            frog.data.mood = "normal";
 
-        mouseActive = true;
-        setTimeout(function(){
-            mouseActive = false
-        }, 200)
+            mouseActive = true;
+            setTimeout(function () {
+                mouseActive = false
+            }, 200)
 
-        return; // need to do this so when I click reset button, it doesn't also trigger the arm
+            return; // need to do this so when I click reset button, it doesn't also trigger the arm
+        }
+        else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over") {
+            gameUI = "cat2";   // introducing cat2
+            resetFly();        // reset cat position
+
+            frog.arm.state = "idle";
+
+            frog.data.catch = 0;
+            frog.data.tries = 0;
+            frog.data.miss = 0;
+            frog.data.mood = "normal";
+
+            mouseActive = true;
+            setTimeout(function () {
+                mouseActive = false
+            }, 200) // u can only press the mouse again after 0.2 sec
+
+            return;
+        }
+
+        if (frog.arm.state === "idle") {
+            frog.arm.state = "outbound";// trigger the arm to go up
+        }
     }
-    else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over") {
-        gameUI = "cat2";   // introducing cat2
-        resetFly();        // reset cat position
 
-        frog.arm.state = "idle";
 
-        frog.data.catch = 0;
-        frog.data.tries = 0;
-        frog.data.miss = 0;
-        frog.data.mood = "normal";
-
-        mouseActive = true;
-          setTimeout(function(){
-            mouseActive = false
-        }, 200) // u can only press the mouse again after 0.2 sec
-
-        return; 
-    }
-
-    if (frog.arm.state === "idle") {
-        frog.arm.state = "outbound";// trigger the arm to go up
-    }
-     }
-
-   
 }
