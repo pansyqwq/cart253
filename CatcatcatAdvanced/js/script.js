@@ -27,7 +27,7 @@ let meowSound;// cat meow sound effect
 let gameMusic;// background music of the game
 let restart;// the image for restart button
 
-let catType = 1; // the type of cat, the first cat will be 1
+let catType = 1; // the type of cat, the first cat will be 1, the second cat will be 2
 
 
 // Our frog/ character
@@ -105,10 +105,10 @@ function drawCat(x, y, w, h) {
 function drawCat2(x, y, w, h) {
     push();
     imageMode(CENTER); // draw from the center instead of top-left
-    translate (x,y); // translate the 0,0 to the position of x and y
+    translate(x, y); // translate the 0,0 to the position of x and y
     scale(-1, 1); //scale applies to the entire image
     image(gingerFrames[frameIndex], 0, 0, w, h);
-    console.log("there is an image",Image);
+    console.log("there is an image", Image);
     pop();
 }
 
@@ -373,17 +373,34 @@ function moveFly() {
  * draw the cat and the heart of the cat
  */
 function drawFly() {
+    if (catType === 1) {
+        push();
+        drawCat(cat.x, cat.y, 300, 300);
+        catWalk();
+        pop();
 
-    push();
-    drawCat(cat.x, cat.y, 300, 300);
-    catWalk();
-    pop();
-    push();
+        push();
+        textAlign(CENTER, CENTER);
+        textSize(cat.size);
+        text("💖", cat.x, cat.y);
+        pop();
+    } else if(catType === 2){
+        push();
+        drawCat2(cat.x, cat.y, 300, 300);
+        catWalk();
+        console.log("cat2 was activated");
+        pop();
 
-    textAlign(CENTER, CENTER);
-    textSize(cat.size);
-    text("💖", cat.x, cat.y);
-    pop();
+        push();
+
+        textAlign(CENTER, CENTER);
+        textSize(cat.size);
+        text("💖", cat.x, cat.y);
+        pop();
+
+    }
+
+
 }
 
 /**
