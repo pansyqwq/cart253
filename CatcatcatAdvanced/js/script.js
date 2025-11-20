@@ -27,7 +27,8 @@ let meowSound;// cat meow sound effect
 let gameMusic;// background music of the game
 let restart;// the image for restart button
 
-let catType = 2; // the type of cat, the first cat will be 1, the second cat will be 2
+let types = [1, 2];
+let catType = 1; // the type of cat, the first cat will be 1, the second cat will be 2
 
 
 // Our frog/ character
@@ -354,6 +355,14 @@ function draw() {
     }
 }
 
+// function chooseCat(){
+//     if (gameUI === "game"){
+//         catType = 1;
+//     } else if (gameUI === "level2"){
+//         catType = int(random(types));
+//     }
+// }
+
 /**
  * Moves the Cat according to its speed
  * load end page if it gets all the way to the right
@@ -406,7 +415,6 @@ function drawFly() {
         textSize(cat.size);
         text("💖", cat.x, cat.y);
         pop();
-
     }
 }
 
@@ -592,3 +600,9 @@ function mousePressed() {
 
 
 }
+
+
+
+// need to randomize the cat on the second level, maybe need an array. 
+// the random need to be 50: 50
+// don't random every frame, maybe do it in reset 
