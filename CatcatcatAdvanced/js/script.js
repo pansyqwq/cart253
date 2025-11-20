@@ -27,7 +27,7 @@ let meowSound;// cat meow sound effect
 let gameMusic;// background music of the game
 let restart;// the image for restart button
 
-let catType = 1; // the type of cat, the first cat will be 1, the second cat will be 2
+let catType = 2; // the type of cat, the first cat will be 1, the second cat will be 2
 
 
 // Our frog/ character
@@ -359,14 +359,25 @@ function draw() {
  * load end page if it gets all the way to the right
  */
 function moveFly() {
-    // Move the cat(originally fly)
-    cat.x += cat.speed;
-    // Handle the cat going off the canvas
-    if (cat.x > width) {
-        // resetFly();
-        gameUI = "Over"//game over when cat ran away
-        // frog.data.catch += 50;//used for testing the bravo ending scene
+    if (catType === 1) {
+        // Move the cat(originally fly)
+        cat.x += cat.speed;
+        // Handle the cat going off the canvas
+        if (cat.x > width) {
+            // resetFly();
+            gameUI = "Over"//game over when cat ran away
+            // frog.data.catch += 50;//used for testing the bravo ending scene
+        }
+    } else if (catType === 2){
+        if(cat.x === 0){
+            cat.x = width;
+        }else if (cat.x < 0) {
+            // resetFly();
+            gameUI = "Over"//game over when cat ran away
+        }
+        cat.x -= cat.speed;
     }
+
 }
 
 /**
@@ -375,7 +386,7 @@ function moveFly() {
 function drawFly() {
     if (catType === 1) {
         push();
-        drawCat(cat.x, cat.y, 300, 300);
+        drawCat(cat.x, cat.y, 300, 300); // first cat animation
         catWalk();
         pop();
 
@@ -384,35 +395,31 @@ function drawFly() {
         textSize(cat.size);
         text("💖", cat.x, cat.y);
         pop();
-    } else if(catType === 2){
+    } else if (catType === 2) {
         push();
-        drawCat2(cat.x, cat.y, 300, 300);
+        drawCat2(cat.x, cat.y, 300, 300); // second cat animation
         catWalk();
-        console.log("cat2 was activated");
         pop();
 
         push();
-
         textAlign(CENTER, CENTER);
         textSize(cat.size);
         text("💖", cat.x, cat.y);
         pop();
 
     }
-
-
 }
 
 /**
  * Resets the cat to the left with a random y
  */
 function resetFly() {
-    if(catType ===1){
+    if (catType === 1) {
         cat.x = 0;
-    } else if(catType ===2){
+    } else if (catType === 2) {
         cat.x = width;
     }
-    
+
     let newY = random(40, 300);
     while (abs(newY - cat.y) < 50) { //abs takes the absolute value, the while loop will end when the condition was broken
         newY = random(40, 300); // pick a new value if newY is too close to the previous cat.y
@@ -429,7 +436,6 @@ function moveFrog() {
     } else {
         frog.body.x = mouseX;
     }
-
 }
 
 /**
