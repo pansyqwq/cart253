@@ -605,8 +605,6 @@ function mousePressed() {
             frog.arm.state = "outbound";// trigger the arm to go up
         }
     }
-
-
 }
 
 
