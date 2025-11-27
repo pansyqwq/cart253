@@ -30,6 +30,8 @@ let restart;// the image for restart button
 let types = [1, 2];
 let catType = 1; // the type of cat, the first cat will be 1, the second cat will be 2
 
+let level = 0;
+
 
 // Our frog/ character
 const frog = {
@@ -310,6 +312,7 @@ function newCat2() {
     }
 }
 function level2UI() {
+    level = 1;
     push();
     background("#eba6cdff");
     pop();
@@ -377,10 +380,10 @@ function moveFly() {
             gameUI = "Over"//game over when cat ran away
             // frog.data.catch += 50;//used for testing the bravo ending scene
         }
-    } else if (catType === 2){
-        if(cat.x === 0){
+    } else if (catType === 2) {
+        if (cat.x === 0) {
             cat.x = width;
-        }else if (cat.x < 0) {
+        } else if (cat.x < 0) {
             // resetFly();
             gameUI = "Over"//game over when cat ran away
         }
@@ -557,7 +560,12 @@ function checkTongueFlyOverlap() {
 function mousePressed() {
     if (mouseActive === false) {
         if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
-            gameUI = "game";   // restart the game
+            if (level === 0) { ////make another variable in the script, to assign to the levels 
+                gameUI = "game";   // restart the game
+            } else if (level === 1){
+                gameUI = "level2"; 
+            }
+
             resetFly();        //reset cat position
 
             frog.arm.state = "idle";
@@ -606,3 +614,6 @@ function mousePressed() {
 // need to randomize the cat on the second level, maybe need an array. 
 // the random need to be 50: 50
 // don't random every frame, maybe do it in reset 
+
+
+
