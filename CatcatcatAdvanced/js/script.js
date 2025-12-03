@@ -285,32 +285,37 @@ function newCat2() {
     push();
     background("#b1a6ebff");
     drawCat2(320, 240, 400, 400);
-    catWalk();// cat idel animation
+    catWalk(); // cat idle animation
     pop();
 
-    //text of starting the game 
+    // text of starting the game 
     push();
     textSize(48);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
     text("NEW CAT ADDED!!!", width / 2, height / 8);
-    console.log("instruction scene");
     pop();
 
-    //the characteris placed, and the arm will stick out when pressed
+    // the character is placed, and the arm sticks out when pressed
     moveTongue();
-    moveFrog()
+    moveFrog();
     drawFrog();
     music();
 
-    //the UI will change to game UI when triggered
+    // UI changes to level2 when arm reaches the middle
     if (frog.arm.y <= height / 2) {
+
         gameUI = "level2";
-        frog.arm.state = "idle"; // make the tongue stop moving 
-        frog.arm.y = height;// set the rongue height to the bottom
-        console.log("level2 has started")
+        frog.arm.state = "idle"; 
+        frog.arm.y = height;
+
+        
+        resetFly(); // need to have reset fly!!!             
+
+        console.log("level2 has started");
     }
 }
+
 function level2UI() {
     level = 1;
     push();
@@ -420,11 +425,26 @@ function drawFly() {
         pop();
     }
 }
+function pickCatType() {
+    if (gameUI === "level2") {
+        // 50/50 random between 1 and 2
+        if (random() < 0.5) {
+            catType = 1;
+        } else {
+            catType = 2;
+        }
+        // or: catType = random([1, 2]);  // p5.js also allows this
+    } else {
+        // level 1: always use cat 1
+        catType = 1;
+    }
+}
 
 /**
  * Resets the cat to the left with a random y
  */
 function resetFly() {
+    pickCatType();
     if (catType === 1) {
         cat.x = 0;
     } else if (catType === 2) {
