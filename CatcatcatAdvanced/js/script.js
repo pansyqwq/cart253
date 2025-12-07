@@ -28,6 +28,8 @@ let faceEmoji = "🥺"; // default normal mode for emoji
 let meowSound;// cat meow sound effect
 let gameMusic;// background music of the game
 let restart;// the image for restart button
+let levelMenuOpen = false; // controls the 'Levels' menu
+
 
 let types = [1, 2];
 let catType = 1; // the type of cat, the first cat will be 1, the second cat will be 2
@@ -220,7 +222,7 @@ function gameOverUI() {
     noFill(); // makes inside of rect transparent
     stroke(0);// choose outline color (0 = black)
     strokeWeight(3);
-    rect(30, height - 220, 340, 140, 20, 20, 0, 20); //长方形的右下角是90度，the right bottom cornor is 90 degrees
+    rect(30, height - 220, 340, 140, 20, 20, 0, 20); 
     pop();
 
     let s = "I wish I could get more cats";
@@ -247,23 +249,75 @@ function gameOverUI() {
     push();
     textSize(120);
     textAlign(CENTER, CENTER);
-    text(faceEmoji, width - width / 4, frog.body.y - 130); //face
+    text(faceEmoji, width - width / 4, frog.body.y - 130); 
     pop();
 
-    //the reset button
+    // ============================
+    // 1. the reset button
+    // ============================
     push();
     fill("#f19238ff");
     noStroke();
-    rect(20, 20, 50, 50, 10); //rect(x,y,w,h,arc)
-    image(restart, 25, 25, 40, 40);// image of the restart button
+    rect(20, 20, 50, 50, 10); // reset button
+    image(restart, 25, 25, 40, 40);
     pop();
 
+    // ============================
+    // 2. the levels menu
+    // ============================
+    let menuX = width - 140;
+    let menuY = 20;
+    let menuW = 120;        
+    let menuH = 50;
 
-    //the continue to the next level button
+    push();
+    fill("#f19238ff");
+    noStroke();
+    rect(menuX, menuY, menuW, menuH, 10);  
+    // “Levels” text
+    fill(0);
+    textAlign(CENTER, CENTER);
+    textSize(20);
+    text("Levels", menuX + menuW / 2, menuY + menuH / 2);
+    pop();
+
+    // ============================
+    // 3. if levelMenuOpen is true， draw menu：1, 2, 3
+    // ============================
+    if (levelMenuOpen) {
+        let itemSize = 40;             // the square for each number
+        let itemGap = 5;
+        // push the square to the right hand side
+        let itemX = menuX + menuW - itemSize; 
+        let firstItemY = menuY + menuH + 10;  // a bit below the level text
+
+        for (let i = 0; i < 3; i++) {
+            let itemY = firstItemY + i * (itemSize + itemGap);
+
+            // the square
+            push();
+            fill("#ffd9a0");           
+            noStroke();
+            rect(itemX, itemY, itemSize, itemSize, 8);
+            pop();
+
+            // number of levels
+            push();
+            fill(0);
+            textAlign(CENTER, CENTER);
+            textSize(20);
+            text(String(i + 1), itemX + itemSize / 2, itemY + itemSize / 2);
+            pop();
+        }
+    }
+
+    // ============================
+    // 4. “Go to the next level?”
+    // ============================
     push();
     let label = "Go to the next level?";
 
-    let rectW = 200
+    let rectW = 200;
     let rectH = 40;
 
     let cx = width / 2;
@@ -272,9 +326,8 @@ function gameOverUI() {
     fill("#f19238ff");
     noStroke();
     rectMode(CENTER);
-    rect(cx, cy, 200, rectH, 10); //rect(x,y,w,h,arc)
+    rect(cx, cy, rectW, rectH, 10);
 
-    //text to the next level
     fill(0);
     textSize(20);
     textAlign(CENTER, CENTER);
@@ -365,13 +418,6 @@ function draw() {
     }
 }
 
-// function chooseCat(){
-//     if (gameUI === "game"){
-//         catType = 1;
-//     } else if (gameUI === "level2"){
-//         catType = int(random(types));
-//     }
-// }
 
 /**
  * Moves the Cat according to its speed
@@ -599,60 +645,187 @@ function checkTongueFlyOverlap() {
  */
 function mousePressed() {
     if (mouseActive === false) {
-        if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70 && gameUI === "Over") {
-            if (level === 0) { ////make another variable in the script, to assign to the levels 
-                gameUI = "game";   // restart the game
-            } else if (level === 1){
-                gameUI = "level2"; 
+
+        // only for game over ui
+        if (gameUI === "Over") {
+
+            // ========== 1. Reset button ==========
+            if (mouseX > 20 && mouseX < 70 && mouseY > 20 && mouseY < 70) {
+                if (level === 0) {
+                    gameUI = "game";   // restart level 1
+                } else if (level === 1) {
+                    gameUI = "level2";
+                } else if (level === 2) {
+                    // 如果之后有 level3，可以写 gameUI = "level3";
+                }
+
+                resetFly();        
+                nextCatPending = false;
+
+                frog.arm.state = "idle";
+
+                frog.data.catch = 0;
+                frog.data.tries = 0;
+                frog.data.miss = 0;
+                frog.data.mood = "normal";
+
+                levelMenuOpen = false; // close menu
+
+                mouseActive = true;
+                setTimeout(function () {
+                    mouseActive = false;
+                }, 200);
+
+                return;
             }
 
-            resetFly();        //reset cat position
-            nextCatPending = false;
+            // ========== 2.Go to the next level? ==========
+            let rectW = 200;
+            let rectH = 40;
+            let cx = width / 2;
+            let cy = height / 2 - 25;
 
-            frog.arm.state = "idle";
+            if (mouseX > cx - rectW / 2 && mouseX < cx + rectW / 2 &&
+                mouseY > cy - rectH / 2 && mouseY < cy + rectH / 2) {
 
-            frog.data.catch = 0;
-            frog.data.tries = 0;
-            frog.data.miss = 0;
-            frog.data.mood = "normal";
+                gameUI = "cat2";   // introducing cat2 
+                resetFly();        
 
-            mouseActive = true;
-            setTimeout(function () {
-                mouseActive = false
-            }, 200)
+                frog.arm.state = "idle";
 
-            return; // need to do this so when I click reset button, it doesn't also trigger the arm
+                frog.data.catch = 0;
+                frog.data.tries = 0;
+                frog.data.miss = 0;
+                frog.data.mood = "normal";
+
+                level = 1;
+                levelMenuOpen = false;
+
+                mouseActive = true;
+                setTimeout(function () {
+                    mouseActive = false;
+                }, 200);
+
+                return;
+            }
+
+            //the "Levels" menu==========
+            let menuX = width - 140;
+            let menuY = 20;
+            let menuW = 120;
+            let menuH = 50;
+
+            if (mouseX > menuX && mouseX < menuX + menuW &&
+                mouseY > menuY && mouseY < menuY + menuH) {
+
+                // menu open or close
+                levelMenuOpen = !levelMenuOpen;
+
+                mouseActive = true;
+                setTimeout(function () {
+                    mouseActive = false;
+                }, 200);
+
+                return;
+            }
+
+            // ========== if menu open, check level 1, 2, 3 ==========
+            if (levelMenuOpen) {
+                let itemSize = 40;
+                let itemGap = 5;
+                let itemX = menuX + menuW - itemSize;
+                let firstItemY = menuY + menuH + 10;
+
+                // check if clicked inside the square
+                function inItem(i) {
+                    let itemY = firstItemY + i * (itemSize + itemGap);
+                    return (
+                        mouseX > itemX && mouseX < itemX + itemSize &&
+                        mouseY > itemY && mouseY < itemY + itemSize
+                    );
+                }
+
+                // ---- Level 1 ----
+                if (inItem(0)) {
+                    gameUI = "game";   // go to level 1
+                    level = 0;
+                    resetFly();
+
+                    frog.arm.state = "idle";
+                    frog.data.catch = 0;
+                    frog.data.tries = 0;
+                    frog.data.miss = 0;
+                    frog.data.mood = "normal";
+
+                    nextCatPending = false;
+                    levelMenuOpen = false;
+
+                    mouseActive = true;
+                    setTimeout(function () {
+                        mouseActive = false;
+                    }, 200);
+
+                    return;
+                }
+
+                // ---- Level 2 ----
+                if (inItem(1)) {
+                    // go to level 2
+                    gameUI = "cat2";
+                    level = 1;
+                    resetFly();
+
+                    frog.arm.state = "idle";
+                    frog.data.catch = 0;
+                    frog.data.tries = 0;
+                    frog.data.miss = 0;
+                    frog.data.mood = "normal";
+
+                    nextCatPending = false;
+                    levelMenuOpen = false;
+
+                    mouseActive = true;
+                    setTimeout(function () {
+                        mouseActive = false;
+                    }, 200);
+
+                    return;
+                }
+
+                // ---- Level 3 ----
+                if (inItem(2)) {
+                    // 这里假设你之后会写：
+                    // else if (gameUI === "cat3") { newCat3(); }
+                    gameUI = "cat3";
+                    level = 2;
+                    resetFly();
+
+                    frog.arm.state = "idle";
+                    frog.data.catch = 0;
+                    frog.data.tries = 0;
+                    frog.data.miss = 0;
+                    frog.data.mood = "normal";
+
+                    nextCatPending = false;
+                    levelMenuOpen = false;
+
+                    mouseActive = true;
+                    setTimeout(function () {
+                        mouseActive = false;
+                    }, 200);
+
+                    return;
+                }
+            }
         }
-        else if (mouseX > 220 && mouseX < 420 && mouseY > 195 && mouseY < 235 && gameUI === "Over") {
-            gameUI = "cat2";   // introducing cat2
-            resetFly();        // reset cat position
-
-            frog.arm.state = "idle";
-
-            frog.data.catch = 0;
-            frog.data.tries = 0;
-            frog.data.miss = 0;
-            frog.data.mood = "normal";
-
-            mouseActive = true;
-            setTimeout(function () {
-                mouseActive = false
-            }, 200) // u can only press the mouse again after 0.2 sec
-
-            return;
-        }
-
         if (frog.arm.state === "idle") {
-            frog.arm.state = "outbound";// trigger the arm to go up
+            frog.arm.state = "outbound"; // trigger the arm to go up
         }
     }
 }
 
 
 
-// need to randomize the cat on the second level, maybe need an array. 
-// the random need to be 50: 50
-// don't random every frame, maybe do it in reset 
 
 
 
