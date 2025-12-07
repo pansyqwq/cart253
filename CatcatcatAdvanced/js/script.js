@@ -578,7 +578,7 @@ function checkTongueFlyOverlap() {
     const d = dist(frog.arm.x, frog.arm.y, cat.x, cat.y);
     // Check if it's an overlap
     const eaten = (d < frog.body.hand / 2 + cat.size / 2);
-    if (eaten) {
+    if (eaten && !nextCatPending) {
         // make the cat pending
         nextCatPending = true;
         caughtCatX = cat.x; 
