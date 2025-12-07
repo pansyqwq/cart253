@@ -60,8 +60,8 @@ const frog = {
         catch: 0, // The number of catches
         tries: 0, // The total attemps
         miss: 0, // The number of times the person has missed
-        mood: "normal" // can be: normal, happy, sad, the mood of the character
-
+        mood: "normal", // can be: normal, happy, sad, the mood of the character
+        run: 0   // number of times the cat ran away
     }
 };
 
@@ -174,6 +174,7 @@ function gameState() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawRunTracker();
 
     //cat counting text
     push();
@@ -383,6 +384,7 @@ function level2UI() {
     moveTongue();
     drawFrog();
     checkTongueFlyOverlap();
+    drawRunTracker();
 
     //cat counting text
     push();
@@ -426,10 +428,10 @@ function draw() {
 function moveFly() {
     if (nextCatPending === true) {
         // x freezes
-        cat.x = caughtCatX;
+        cat.x = frog.arm.x;
 
         // the cat y moves with the arm
-        cat.y = frog.arm.y;      // 或者 frog.arm.y - 40 之类的
+        cat.y = frog.arm.y;      
 
         return; 
     }
@@ -438,16 +440,28 @@ function moveFly() {
         cat.x += cat.speed;
         // Handle the cat going off the canvas
         if (cat.x > width) {
-            // resetFly();
-            gameUI = "Over"//game over when cat ran away
-            // frog.data.catch += 50;//used for testing the bravo ending scene
+            frog.data.run += 1; // cat ran away once
+            console.log("cat ran away, run =", frog.data.run);
+
+            if (frog.data.run >= 3) {
+                gameUI = "Over"; // 3 runs -> game over
+            } else {
+                resetFly();      // less than 3: new cat
+            }
         }
     } else if (catType === 2) {
         if (cat.x === 0) {
             cat.x = width;
         } else if (cat.x < 0) {
-            // resetFly();
-            gameUI = "Over"//game over when cat ran away
+             // left side escape
+            frog.data.run += 1; //cat ran away once
+            console.log("cat ran away, run =", frog.data.run);
+
+            if (frog.data.run >= 3) {
+                gameUI = "Over";
+            } else {
+                resetFly();
+            }
         }
         cat.x -= cat.speed;
     }
@@ -482,6 +496,36 @@ function drawFly() {
         pop();
     }
 }
+// draw the "run" cat tracker 
+function drawRunTracker() {
+    const maxRuns = 3;                 // total cats / chances
+    let remaining = maxRuns - frog.data.run;
+
+    // make sure it never goes below 0 or above 3
+    if (remaining < 0) remaining = 0;
+    if (remaining > maxRuns) remaining = maxRuns;
+
+    push();
+    textAlign(LEFT, TOP);
+    textSize(50);                      // each emoji 50px
+
+    for (let i = 0; i < maxRuns; i++) {
+        // get 3 cats lay one by one
+        const x = 20 + i * 55;        // 20 + 55px space
+        const y = 20;
+
+        // change cat to cross when i is below remaining, this allows that cat turn into corss starting from the right hand side
+        // ex: run = 1 -> remaining = 2 -> 🐱 🐱 ❌
+        if (i < remaining) {
+            text("🐱", x, y);
+        } else {
+            text("❌", x, y);
+        }
+    }
+
+    pop();
+}
+
 function pickCatType() {
     if (gameUI === "level2") {
         // 50/50 random between 1 and 2
@@ -668,6 +712,8 @@ function mousePressed() {
                 frog.data.tries = 0;
                 frog.data.miss = 0;
                 frog.data.mood = "normal";
+                frog.data.run = 0;
+
 
                 levelMenuOpen = false; // close menu
 
@@ -688,7 +734,13 @@ function mousePressed() {
             if (mouseX > cx - rectW / 2 && mouseX < cx + rectW / 2 &&
                 mouseY > cy - rectH / 2 && mouseY < cy + rectH / 2) {
 
-                gameUI = "cat2";   // introducing cat2 
+                if (level === 0) {
+                    gameUI = "cat2";   // go to the next level
+                } else if (level === 1) {
+                    gameUI = "level3";
+                } else if (level === 2) {
+                    // 如果之后有 level3，可以写 gameUI = "level3";
+                }
                 resetFly();        
 
                 frog.arm.state = "idle";
@@ -697,6 +749,8 @@ function mousePressed() {
                 frog.data.tries = 0;
                 frog.data.miss = 0;
                 frog.data.mood = "normal";
+                frog.data.run = 0;
+
 
                 level = 1;
                 levelMenuOpen = false;
@@ -756,6 +810,7 @@ function mousePressed() {
                     frog.data.tries = 0;
                     frog.data.miss = 0;
                     frog.data.mood = "normal";
+                    frog.data.run = 0;
 
                     nextCatPending = false;
                     levelMenuOpen = false;
@@ -780,6 +835,7 @@ function mousePressed() {
                     frog.data.tries = 0;
                     frog.data.miss = 0;
                     frog.data.mood = "normal";
+                    frog.data.run = 0;
 
                     nextCatPending = false;
                     levelMenuOpen = false;
@@ -805,6 +861,7 @@ function mousePressed() {
                     frog.data.tries = 0;
                     frog.data.miss = 0;
                     frog.data.mood = "normal";
+                    frog.data.run = 0;
 
                     nextCatPending = false;
                     levelMenuOpen = false;
