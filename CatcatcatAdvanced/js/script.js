@@ -15,6 +15,8 @@
 
 "use strict";
 let mouseActive = false;
+let nextCatPending = false;
+let caughtCatX = 0;   
 
 //Our cat variables, for animations
 let catFrames = [];
@@ -376,6 +378,15 @@ function draw() {
  * load end page if it gets all the way to the right
  */
 function moveFly() {
+    if (nextCatPending === true) {
+        // x freezes
+        cat.x = caughtCatX;
+
+        // the cat y moves with the arm
+        cat.y = frog.arm.y;      // 或者 frog.arm.y - 40 之类的
+
+        return; 
+    }
     if (catType === 1) {
         // Move the cat(originally fly)
         cat.x += cat.speed;
@@ -508,6 +519,13 @@ function moveTongue() {
             frog.arm.state = "idle";
         }
     }
+    if (nextCatPending &&
+        frog.arm.state === "inbound" &&
+        frog.arm.y >= height * 0.80) { // when the arm is at the bottom of the page
+
+        resetFly();          // get the next cat
+        nextCatPending = false; // 标记清掉
+    }
 }
 
 function changeMood() {
@@ -561,8 +579,10 @@ function checkTongueFlyOverlap() {
     // Check if it's an overlap
     const eaten = (d < frog.body.hand / 2 + cat.size / 2);
     if (eaten) {
-        // Reset the cat
-        resetFly();
+        // make the cat pending
+        nextCatPending = true;
+        caughtCatX = cat.x; 
+
         frog.data.catch += 1;
         frog.data.mood = "happy"; // change the emoji to 🥰
         console.log("catched:", frog.data.catch);
@@ -587,6 +607,7 @@ function mousePressed() {
             }
 
             resetFly();        //reset cat position
+            nextCatPending = false;
 
             frog.arm.state = "idle";
 
