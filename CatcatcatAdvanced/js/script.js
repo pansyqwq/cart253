@@ -97,6 +97,10 @@ function preload() {
         gingerFrames[i] = loadImage(`assets/images/ginger${i}.png`);
         console.log("cat2 frame was added")
     }// all the frames of the cat2
+      for (let i = 0; i < 4; i++) {
+        gingerFrames[i] = loadImage(`assets/images/fire${i}.png`);
+        console.log("cat3 frame was added")
+    }// all the frames of the cat2
 
     meowSound = loadSound("assets/sounds/Meow1.mp3");
     gameMusic = loadSound("assets/music/game.mp3");
@@ -552,9 +556,9 @@ function resetFly() {
         cat.x = width;
     }
 
-    let newY = random(40, 300);
+    let newY = random(70, 300);
     while (abs(newY - cat.y) < 50) { //abs takes the absolute value, the while loop will end when the condition was broken
-        newY = random(40, 300); // pick a new value if newY is too close to the previous cat.y
+        newY = random(70, 300); // pick a new value if newY is too close to the previous cat.y
     }
     cat.y = newY;
 }
