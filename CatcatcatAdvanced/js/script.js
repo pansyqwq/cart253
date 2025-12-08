@@ -21,6 +21,7 @@ let caughtCatX = 0;
 //Our cat variables, for animations
 let catFrames = [];
 let gingerFrames = [];
+let fireFrames = [];
 let frameIndex = 0;
 
 let faceEmoji = "🥺"; // default normal mode for emoji
@@ -98,7 +99,7 @@ function preload() {
         console.log("cat2 frame was added")
     }// all the frames of the cat2
       for (let i = 0; i < 4; i++) {
-        gingerFrames[i] = loadImage(`assets/images/fire${i}.png`);
+        fireFrames[i] = loadImage(`assets/images/fire${i}.png`);
         console.log("cat3 frame was added")
     }// all the frames of the cat2
 
@@ -123,12 +124,24 @@ function drawCat2(x, y, w, h) {
     pop();
 }
 
+function drawCat3(x, y, w, h) {
+    push();
+    imageMode(CENTER); // draw from the center instead of top-left
+    translate(x, y); // translate the 0,0 to the position of x and y
+    scale(-1, 1); //scale applies to the entire image
+    image(fireFrames[frameIndex], 0, 0, w, h);
+    console.log("there is an image", Image);
+    pop();
+}
+
 function catWalk() {
     if (frameCount % 15 === 0) {
         frameIndex = (frameIndex + 1) % catFrames.length;
     }
     //   console.log("the cat is walking")
 }
+
+
 
 //Our Starting Scene 
 //has instructions and start the game button
@@ -401,6 +414,74 @@ function level2UI() {
     music();
 }
 
+function newCat3() {
+    push();
+    background("#d3867bff");
+    drawCat3(320, 240, 400, 400);
+    catWalk(); // cat idle animation
+    pop();
+
+    // text of starting the game 
+    push();
+    textSize(48);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("NEW CAT ADDED!!!", width / 2, height / 8);
+    pop();
+
+    // text2
+    push();
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("Big Bad Evil Cat! Do Not Touch!!", width / 2, height / 5);
+    pop();
+
+    // the character is placed, and the arm sticks out when pressed
+    moveTongue();
+    moveFrog();
+    drawFrog();
+    music();
+
+    // UI changes to level2 when arm reaches the middle
+    if (frog.arm.y <= height / 2) {
+
+        gameUI = "level3";
+        frog.arm.state = "idle"; 
+        frog.arm.y = height;
+
+        
+        resetFly(); // need to have reset fly!!!             
+
+        console.log("level3 has started");
+    }
+}
+
+function level3UI() {
+    level = 2;
+    push();
+    background("#d6eba6ff");
+    pop();
+
+    moveFly();
+    drawFly();
+    moveFrog();
+    moveTongue();
+    drawFrog();
+    checkTongueFlyOverlap();
+    drawRunTracker();
+
+    //cat counting text
+    push();
+    textSize(25);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text("number of cats caught: " + frog.data.catch, width - width / 4, 20);
+    pop();
+
+    music();
+}
+
 function music() {
     //loop the music
     if (!gameMusic.isPlaying()) {
@@ -421,6 +502,10 @@ function draw() {
         newCat2();
     } else if (gameUI === "level2") {
         level2UI();
+    } else if (gameUI === "cat3") {
+        newCat3();
+    }else if (gameUI === "level3") {
+        level3UI();
     }
 }
 
@@ -539,9 +624,17 @@ function pickCatType() {
             catType = 2;
         }
         // or: catType = random([1, 2]);  // p5.js also allows this
-    } else {
+    } else if(gameUI === "game"){
         // level 1: always use cat 1
         catType = 1;
+    } else if(gameUI === "level3"){
+        if (random() < 0.4) { // 40% cat1
+            catType = 1;
+        } else if(random() >0.6){ // 40% cat2
+            catType = 2;
+        } else {
+            catType = 3;
+        }
     }
 }
 
@@ -567,7 +660,7 @@ function resetFly() {
  * Moves the character to the mouse position on x
  */
 function moveFrog() {
-    if (gameUI === "start" || gameUI === "cat2") {
+    if (gameUI === "start" || gameUI === "cat2" || gameUI === "cat3") {
         frog.body.x = width / 2;
     } else {
         frog.body.x = mouseX;
@@ -741,7 +834,7 @@ function mousePressed() {
                 if (level === 0) {
                     gameUI = "cat2";   // go to the next level
                 } else if (level === 1) {
-                    gameUI = "level3";
+                    gameUI = "cat3";
                 } else if (level === 2) {
                     // 如果之后有 level3，可以写 gameUI = "level3";
                 }
@@ -854,8 +947,6 @@ function mousePressed() {
 
                 // ---- Level 3 ----
                 if (inItem(2)) {
-                    // 这里假设你之后会写：
-                    // else if (gameUI === "cat3") { newCat3(); }
                     gameUI = "cat3";
                     level = 2;
                     resetFly();
