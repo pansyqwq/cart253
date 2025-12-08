@@ -27,6 +27,8 @@ let frameIndex = 0;
 let faceEmoji = "🥺"; // default normal mode for emoji
 
 let meowSound;// cat meow sound effect
+let meowSound2;// cat2 meow sound effect
+let ouch; // ouch sound effect
 let gameMusic;// background music of the game
 let restart;// the image for restart button
 let levelMenuOpen = false; // controls the 'Levels' menu
@@ -105,6 +107,8 @@ function preload() {
     }// all the frames of the cat2
 
     meowSound = loadSound("assets/sounds/Meow1.mp3");
+    meowSound2 = loadSound("assets/sounds/Meow2.mp3");
+    ouch = loadSound("assets/sounds/ouch.mp3");
     gameMusic = loadSound("assets/music/game.mp3");
     restart = loadImage("assets/images/restartButton.png");
 }
@@ -827,17 +831,27 @@ function checkTongueFlyOverlap() {
             if (frog.data.run >= 3) { // if catched 3 times game over
                 gameUI = "Over";
             }
-        } else {
-            // happy is catched other cats
+            ouch.setVolume(0.3); // volume goes between 0.0 and 1.0
+            ouch.play();
+        } else if (catType === 1){
+             // happy if catched other cats
             frog.data.mood = "happy";
             frog.data.catch += 1;
+            console.log("catched:", frog.data.catch);
+            meowSound.setVolume(0.3); // volume goes between 0.0 and 1.0
+            meowSound.play();
+        } else if (catType === 2){
+             // happy if catched other cats
+            frog.data.mood = "happy";
+            frog.data.catch += 1;
+            console.log("catched:", frog.data.catch);
+            meowSound2.setVolume(0.3); // volume goes between 0.0 and 1.0
+            meowSound2.play();
         }
-        console.log("catched:", frog.data.catch);
+        
         // Bring back the arm
         frog.arm.state = "inbound";
-        //let the cat meow
-        meowSound.setVolume(0.3); // volume goes between 0.0 and 1.0
-        meowSound.play();
+       
     }
 }
 
