@@ -16,7 +16,7 @@
 "use strict";
 let mouseActive = false;
 let nextCatPending = false;
-let caughtCatX = 0;   
+let caughtCatX = 0;
 
 //Our cat variables, for animations
 let catFrames = [];
@@ -32,7 +32,7 @@ let restart;// the image for restart button
 let levelMenuOpen = false; // controls the 'Levels' menu
 
 
-let types = [1, 2];
+let showNextLevelMsg = false; // whether to show "New levels yet to be coming"
 let catType = 1; // the type of cat, the first cat will be 1, the second cat will be 2
 
 let level = 0;
@@ -75,7 +75,8 @@ const cat = {
     x: 0,
     y: 200, // Will be random
     size: 30,
-    speed: 6
+    speed: 6,
+    dir: 1 // 1 go to the right, -1 go to the left
 };
 
 /**
@@ -98,7 +99,7 @@ function preload() {
         gingerFrames[i] = loadImage(`assets/images/ginger${i}.png`);
         console.log("cat2 frame was added")
     }// all the frames of the cat2
-      for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         fireFrames[i] = loadImage(`assets/images/fire${i}.png`);
         console.log("cat3 frame was added")
     }// all the frames of the cat2
@@ -128,7 +129,12 @@ function drawCat3(x, y, w, h) {
     push();
     imageMode(CENTER); // draw from the center instead of top-left
     translate(x, y); // translate the 0,0 to the position of x and y
-    scale(-1, 1); //scale applies to the entire image
+    if (cat.dir === 1) {
+        scale(1, 1);
+    } else if (cat.dir === -1) {
+        // flip the cat, when the cat is going to the left
+        scale(-1, 1);
+    }
     image(fireFrames[frameIndex], 0, 0, w, h);
     console.log("there is an image", Image);
     pop();
@@ -240,7 +246,7 @@ function gameOverUI() {
     noFill(); // makes inside of rect transparent
     stroke(0);// choose outline color (0 = black)
     strokeWeight(3);
-    rect(30, height - 220, 340, 140, 20, 20, 0, 20); 
+    rect(30, height - 220, 340, 140, 20, 20, 0, 20);
     pop();
 
     let s = "I wish I could get more cats";
@@ -267,7 +273,7 @@ function gameOverUI() {
     push();
     textSize(120);
     textAlign(CENTER, CENTER);
-    text(faceEmoji, width - width / 4, frog.body.y - 130); 
+    text(faceEmoji, width - width / 4, frog.body.y - 130);
     pop();
 
     // ============================
@@ -285,13 +291,13 @@ function gameOverUI() {
     // ============================
     let menuX = width - 140;
     let menuY = 20;
-    let menuW = 120;        
+    let menuW = 120;
     let menuH = 50;
 
     push();
     fill("#f19238ff");
     noStroke();
-    rect(menuX, menuY, menuW, menuH, 10);  
+    rect(menuX, menuY, menuW, menuH, 10);
     // “Levels” text
     fill(0);
     textAlign(CENTER, CENTER);
@@ -306,7 +312,7 @@ function gameOverUI() {
         let itemSize = 40;             // the square for each number
         let itemGap = 5;
         // push the square to the right hand side
-        let itemX = menuX + menuW - itemSize; 
+        let itemX = menuX + menuW - itemSize;
         let firstItemY = menuY + menuH + 10;  // a bit below the level text
 
         for (let i = 0; i < 3; i++) {
@@ -314,7 +320,7 @@ function gameOverUI() {
 
             // the square
             push();
-            fill("#ffd9a0");           
+            fill("#ffd9a0");
             noStroke();
             rect(itemX, itemY, itemSize, itemSize, 8);
             pop();
@@ -352,6 +358,18 @@ function gameOverUI() {
     text(label, cx, cy);
     console.log("the next scene text was activated");
     pop();
+
+    // ============================
+    // 5. level 3 ending message
+    // ============================
+    if (level === 2 && showNextLevelMsg) {
+        push();
+        textSize(20);
+        textAlign(CENTER, TOP);
+        // just a bit under the button
+        text("New levels yet to be coming", cx, cy+ 10);
+        pop();
+    }
 }
 
 function newCat2() {
@@ -379,10 +397,10 @@ function newCat2() {
     if (frog.arm.y <= height / 2) {
 
         gameUI = "level2";
-        frog.arm.state = "idle"; 
+        frog.arm.state = "idle";
         frog.arm.y = height;
 
-        
+
         resetFly(); // need to have reset fly!!!             
 
         console.log("level2 has started");
@@ -447,10 +465,10 @@ function newCat3() {
     if (frog.arm.y <= height / 2) {
 
         gameUI = "level3";
-        frog.arm.state = "idle"; 
+        frog.arm.state = "idle";
         frog.arm.y = height;
 
-        
+
         resetFly(); // need to have reset fly!!!             
 
         console.log("level3 has started");
@@ -504,7 +522,7 @@ function draw() {
         level2UI();
     } else if (gameUI === "cat3") {
         newCat3();
-    }else if (gameUI === "level3") {
+    } else if (gameUI === "level3") {
         level3UI();
     }
 }
@@ -518,11 +536,9 @@ function moveFly() {
     if (nextCatPending === true) {
         // x freezes
         cat.x = frog.arm.x;
-
         // the cat y moves with the arm
-        cat.y = frog.arm.y;      
-
-        return; 
+        cat.y = frog.arm.y;
+        return;
     }
     if (catType === 1) {
         // Move the cat(originally fly)
@@ -542,7 +558,7 @@ function moveFly() {
         if (cat.x === 0) {
             cat.x = width;
         } else if (cat.x < 0) {
-             // left side escape
+            // left side escape
             frog.data.run += 1; //cat ran away once
             console.log("cat ran away, run =", frog.data.run);
 
@@ -553,6 +569,13 @@ function moveFly() {
             }
         }
         cat.x -= cat.speed;
+    } else if (catType === 3) {
+        cat.x += cat.speed * cat.dir; // using dir to control the cat direction
+        if (cat.dir === 1 && cat.x > width) { // if going to the right and x>width
+            resetFly();
+        } else if (cat.dir === -1 && cat.x < 0) {
+            resetFly();
+        }
     }
 
 }
@@ -583,6 +606,18 @@ function drawFly() {
         textSize(cat.size);
         text("💖", cat.x, cat.y);
         pop();
+    } else if (catType === 3) {
+        push();
+        drawCat3(cat.x, cat.y, 300, 300);
+        catWalk();
+        pop();
+
+        // a different emoji for the bad fire cat
+        push();
+        textAlign(CENTER, CENTER);
+        textSize(cat.size);
+        text("🔥", cat.x, cat.y);
+        pop();
     }
 }
 // draw the "run" cat tracker 
@@ -611,7 +646,6 @@ function drawRunTracker() {
             text("❌", x, y);
         }
     }
-
     pop();
 }
 
@@ -624,16 +658,17 @@ function pickCatType() {
             catType = 2;
         }
         // or: catType = random([1, 2]);  // p5.js also allows this
-    } else if(gameUI === "game"){
+    } else if (gameUI === "game") {
         // level 1: always use cat 1
         catType = 1;
-    } else if(gameUI === "level3"){
-        if (random() < 0.4) { // 40% cat1
+    } else if (gameUI === "level3") {
+        let r = random();
+        if (r < 0.4) { // 40% cat1
             catType = 1;
-        } else if(random() >0.6){ // 40% cat2
+        } else if (r < 0.8) { // 40% cat2
             catType = 2;
         } else {
-            catType = 3;
+            catType = 3; // 20% cat 3 fire cat
         }
     }
 }
@@ -643,10 +678,24 @@ function pickCatType() {
  */
 function resetFly() {
     pickCatType();
+
     if (catType === 1) {
+        // cat1: go from left to right
         cat.x = 0;
+        cat.dir = 1;
     } else if (catType === 2) {
+        // cat2: go from right to left
         cat.x = width;
+        cat.dir = -1;
+    } else if (catType === 3) {
+        // cat3：50% from left to right，50% from right to left
+        if (random() < 0.5) {
+            cat.dir = 1;      // to the right
+            cat.x = 0;
+        } else {
+            cat.dir = -1;     // to the left
+            cat.x = width;
+        }
     }
 
     let newY = random(70, 300);
@@ -725,6 +774,8 @@ function changeMood() {
         faceEmoji = "🥰";
     } else if (frog.data.mood === "bravo") {
         faceEmoji = "🥳";
+    } else if (frog.data.mood === "melt") {
+        faceEmoji = "🫠";
     }
 }
 /**
@@ -768,10 +819,19 @@ function checkTongueFlyOverlap() {
     if (eaten && !nextCatPending) {
         // make the cat pending
         nextCatPending = true;
-        caughtCatX = cat.x; 
-
-        frog.data.catch += 1;
-        frog.data.mood = "happy"; // change the emoji to 🥰
+        caughtCatX = cat.x;
+        if (catType === 3) {
+            // if catched fire cat, then melt
+            frog.data.mood = "melt";
+            frog.data.run += 1; // count as a miss
+            if (frog.data.run >= 3) { // if catched 3 times game over
+                gameUI = "Over";
+            }
+        } else {
+            // happy is catched other cats
+            frog.data.mood = "happy";
+            frog.data.catch += 1;
+        }
         console.log("catched:", frog.data.catch);
         // Bring back the arm
         frog.arm.state = "inbound";
@@ -797,10 +857,10 @@ function mousePressed() {
                 } else if (level === 1) {
                     gameUI = "level2";
                 } else if (level === 2) {
-                    // 如果之后有 level3，可以写 gameUI = "level3";
+                    gameUI = "level3";
                 }
 
-                resetFly();        
+                resetFly();
                 nextCatPending = false;
 
                 frog.arm.state = "idle";
@@ -833,24 +893,35 @@ function mousePressed() {
 
                 if (level === 0) {
                     gameUI = "cat2";   // go to the next level
+                    level = 1;
+                    resetFly();
+                    frog.arm.state = "idle";
+                    frog.data.catch = 0;
+                    frog.data.tries = 0;
+                    frog.data.miss = 0;
+                    frog.data.mood = "normal";
+                    frog.data.run = 0;
+                    nextCatPending = false;
+                    levelMenuOpen = false;
+
+                    showNextLevelMsg = false;
                 } else if (level === 1) {
                     gameUI = "cat3";
+                    level = 2;
+                    resetFly();
+                    frog.arm.state = "idle";
+                    frog.data.catch = 0;
+                    frog.data.tries = 0;
+                    frog.data.miss = 0;
+                    frog.data.mood = "normal";
+                    frog.data.run = 0;
+                    nextCatPending = false;
+                    levelMenuOpen = false;
+
+                    showNextLevelMsg = false;
                 } else if (level === 2) {
-                    // 如果之后有 level3，可以写 gameUI = "level3";
+                    showNextLevelMsg = true;
                 }
-                resetFly();        
-
-                frog.arm.state = "idle";
-
-                frog.data.catch = 0;
-                frog.data.tries = 0;
-                frog.data.miss = 0;
-                frog.data.mood = "normal";
-                frog.data.run = 0;
-
-
-                level = 1;
-                levelMenuOpen = false;
 
                 mouseActive = true;
                 setTimeout(function () {
