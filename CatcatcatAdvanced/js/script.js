@@ -104,7 +104,7 @@ function preload() {
     for (let i = 0; i < 4; i++) {
         fireFrames[i] = loadImage(`assets/images/fire${i}.png`);
         console.log("cat3 frame was added")
-    }// all the frames of the cat2
+    }// all the frames of the cat3
 
     meowSound = loadSound("assets/sounds/Meow1.mp3");
     meowSound2 = loadSound("assets/sounds/Meow2.mp3");
